@@ -1,7 +1,0 @@
-rm -rf #{working_dir}
-mkdir #{working_dir}
-cd #{working_dir}
-git init
-echo "initial commit" > README.md
-git add README.md
-git commit -a -m "Initial repository layout"

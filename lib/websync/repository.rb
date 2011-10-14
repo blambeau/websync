@@ -20,7 +20,11 @@ module WebSync
 
       # Is there pending changes on the local copy?
       def pending_changes?
-        gritrepo.status.any?{|f| !f.type.nil?}
+        # pending changes 
+        #   <=> either an untracked or one whose status is not nil ('A', 'M', 'D')
+        #   <=> any?{|f| f.untracked} || any?{|f| !f.type.nil?}
+        #   <=> any?{|f| f.untracked || !f.type.nil? }
+        gritrepo.status.any?{|f| f.untracked || !f.type.nil? }
       end
 
       # Is there bug fixes availables for the local copy?
