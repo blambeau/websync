@@ -7,14 +7,10 @@ module WebSync
     let(:added) { File.join(git_repo_client, "ADDED.md") }
 
     # Create a new repository before all tests
-    before(:all) {
-      build_clean_fixture_repo(working_dir)
-    }
+    before(:all) { build_git_repo }
 
     # Reset the repository after each test
-    after{
-      reset_repo_changes(working_dir)
-    }
+    after{ reset_git_repo_client }
 
     # Does the repository have pending changes?
     subject{ repo.pending_changes? }

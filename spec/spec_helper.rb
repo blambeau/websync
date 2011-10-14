@@ -42,7 +42,7 @@ def build_git_repo
     git remote add origin #{git_repo_origin}
     git push -u origin master
   EOF
-  `#{code}`
+  `#{code}` unless File.exists?(git_repo_base)
 end
 
 def reset_git_repo_client
