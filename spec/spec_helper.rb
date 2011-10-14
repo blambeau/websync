@@ -31,13 +31,14 @@ def build_git_repo
     cd #{git_repo_origin}
     git init --bare
     #
+    mkdir #{git_repo_client}
     cd #{git_repo_client}
     git init
     echo "ignored file" > IGNORED.md
     echo "initial commit" > README.md
     echo "IGNORED.md" > .gitignore
     git add README.md .gitignore
-    git commit -a -m "Initial repository layout"`
+    git commit -a -m "Initial repository layout"
     git remote add origin #{git_repo_origin}
     git push -u origin master
   EOF
@@ -49,5 +50,3 @@ def reset_git_repo_client
    rm -rf ADDED.md
    git reset --hard`
 end
-
-

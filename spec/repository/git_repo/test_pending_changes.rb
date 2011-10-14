@@ -2,28 +2,9 @@ require 'spec_helper'
 module WebSync
   describe Repository::GitRepo, "pending_changes?" do
 
-    def build_clean_fixture_repo(working_dir)
-      `rm -rf #{working_dir}
-       mkdir #{working_dir}
-       cd #{working_dir}
-       git init
-       echo "ignored file" > IGNORED.md
-       echo "initial commit" > README.md
-       echo "IGNORED.md" > .gitignore
-       git add README.md .gitignore
-       git commit -a -m "Initial repository layout"`
-    end
-
-    def reset_repo_changes(working_dir)
-      `cd #{working_dir}
-       rm -rf ADDED.md
-       git reset --hard`
-    end
-
-    let(:working_dir){ File.join(fixtures_folder, "gitrepo") }
-    let(:repo){ Repository::GitRepo.new(working_dir) }
-    let(:readme){ File.join(working_dir, "README.md") }
-    let(:added) { File.join(working_dir, "ADDED.md") }
+    let(:repo){ Repository::GitRepo.new(git_repo_client) }
+    let(:readme){ File.join(git_repo_client, "README.md") }
+    let(:added) { File.join(git_repo_client, "ADDED.md") }
 
     # Create a new repository before all tests
     before(:all) {
