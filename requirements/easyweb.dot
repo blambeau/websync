@@ -1,0 +1,10 @@
+digraph G {
+  graph[rankdir="BT" ranksep="0.2"]
+  V0 [shape="polygon" margin="-" skew="0.3" style="filled" fillcolor="#D7E6EE" fontname="Helvetica" fontsize="12.0" label="Achieve[WebSite\n UpToDate With\n LocalCopy When\n Needed]"]
+  V1 [label="" shape="circle" style="filled" fillcolor="#FFDE3F" width="0.15" height="0.15" fixedsize="true"]
+  V2 [shape="polygon" skew="0.3" margin="0" style="filled" fillcolor="#D7E6EE" fontname="Helvetica" fontsize="12.0" label="Achieve[Synchronization\n Request Made]"]
+  V3 [shape="polygon" skew="0.3" margin="0" style="filled" fillcolor="#D7E6EE" fontname="Helvetica" fontsize="12.0" label="Achieve[WebSite\n UpToDate When\n SyncRequest Made]"]
+  V1 -> V0 []
+  V2 -> V1 [arrowhead="none"]
+  V3 -> V1 [arrowhead="none"]
+}
