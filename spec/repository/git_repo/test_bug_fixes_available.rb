@@ -4,9 +4,6 @@ module WebSync
 
     let(:repo){ Repository::GitRepo.new(git_repo_client) }
 
-    # Create a new repository before all tests
-    before(:all) { build_git_repo }
-
     # Reset the repository after each test
     after{ reset_git_repo_client }
 

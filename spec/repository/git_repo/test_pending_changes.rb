@@ -6,9 +6,6 @@ module WebSync
     let(:readme){ File.join(git_repo_client, "README.md") }
     let(:added) { File.join(git_repo_client, "ADDED.md") }
 
-    # Create a new repository before all tests
-    before(:all) { build_git_repo }
-
     # Reset the repository after each test
     after{ reset_git_repo_client }
 
