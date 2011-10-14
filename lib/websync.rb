@@ -6,4 +6,5 @@ require "websync/loader"
 module WebSync
 
 end # module WebSync
-
+require 'websync/client_agent'
+require 'websync/server_agent'

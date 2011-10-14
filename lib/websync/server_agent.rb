@@ -1,5 +1,5 @@
-class EasyWeb
-  class DeployAgent
+class WebSync
+  class ServerAgent
 
     # Is the production up to date?
     def production_up_to_date?
@@ -18,5 +18,5 @@ class EasyWeb
     def synchronize
     end
 
-  end # class DeployAgent
-end # class EasyWeb
+  end # class ServerAgent
+end # class WebSync

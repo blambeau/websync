@@ -1,4 +1,4 @@
-class EasyWeb
+class WebSync
   class ClientAgent
 
     ############################################################ State Variables
@@ -66,8 +66,7 @@ class EasyWeb
     end
 
     #
-    # Send a notification to the EasyWeb Client that the repository has been 
-    # updated.
+    # Send a notification to the Server that the repository has been updated.
     #
     # RegTrig for Achieve[RepoSync Notified When Repo Synchronized]
     #   @not(has_local_savings?)
@@ -76,4 +75,4 @@ class EasyWeb
     end
 
   end # class ClientAgent
-end # end EasyWeb
+end # end WebSync
