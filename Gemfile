@@ -12,5 +12,5 @@ group :release do
 end
 
 group :runtime do
-  gem "grit", "~> 2.4.1"
+  gem "grit", :git => "https://blambeau@github.com/blambeau/grit.git"
 end

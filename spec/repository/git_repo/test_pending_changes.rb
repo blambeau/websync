@@ -3,18 +3,20 @@ module WebSync
   describe Repository::GitRepo, "pending_changes?" do
 
     def build_clean_fixture_repo(working_dir)
-      `rm -rf #{working_dir} &&
-       mkdir #{working_dir}  &&
-       cd #{working_dir}     &&
-       git init              &&
-       echo "initial commit" > README.md &&
-       git add README.md &&
+      `rm -rf #{working_dir}
+       mkdir #{working_dir}
+       cd #{working_dir}
+       git init
+       echo "ignored file" > IGNORED.md
+       echo "initial commit" > README.md
+       echo "IGNORED.md" > .gitignore
+       git add README.md .gitignore
        git commit -a -m "Initial repository layout"`
     end
 
     def reset_repo_changes(working_dir)
-      `cd #{working_dir} &&
-       rm -rf ADDED.md   &&
+      `cd #{working_dir}
+       rm -rf ADDED.md
        git reset --hard`
     end
 
