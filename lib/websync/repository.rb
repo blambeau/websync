@@ -30,10 +30,12 @@ module WebSync
 
       # Is there bug fixes availables for the local copy?
       def bug_fixes_available?
+        false
       end
 
-      # Does the local copy have local savings?
-      def local_savings?
+      # Does the local copy have unpushed commits?
+      def unpushed_commits?
+        false
       end
 
       private 
