@@ -3,6 +3,9 @@
 template-info:
   name: "ruby"
   version: 1.5.1
+  manifest:
+    lib/__lower__/loader.rb:
+      safe-override: false
 variables:
   lower: 
     websync

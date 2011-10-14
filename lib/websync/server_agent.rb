@@ -1,4 +1,4 @@
-class WebSync
+module WebSync
   class ServerAgent
 
     # Is the production up to date?

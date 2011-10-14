@@ -1,4 +1,4 @@
-class WebSync
+module WebSync
   class ClientAgent
 
     ############################################################ State Variables
@@ -12,7 +12,7 @@ class WebSync
     end
 
     # Does the local copy have local savings?
-    def has_local_savings?
+    def local_savings?
     end
 
     ############################################################ Operations
@@ -50,7 +50,7 @@ class WebSync
     # Synchronize the repository with saved local changes
     #
     # DomPre
-    #   has_local_savings?
+    #   local_savings?
     # DomPost
     #   has_local_savings!(false)
     # ReqPre for Avoid[BadDeployFalsePositive]
@@ -69,7 +69,7 @@ class WebSync
     # Send a notification to the Server that the repository has been updated.
     #
     # RegTrig for Achieve[RepoSync Notified When Repo Synchronized]
-    #   @not(has_local_savings?)
+    #   @not(local_savings?)
     #
     def notify_repo_synced
     end
