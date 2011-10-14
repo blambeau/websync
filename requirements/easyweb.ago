@@ -1,68 +1,79 @@
 About:
-  name: EasyWeb
+  name: WebSync
   version: 0.1.0
   authors:
     - Bernard Lambeau <bernard.lambeau@uclouvain.be>
-  description: A simple and effective web site deployer
+  description: 
+    This project aims at building a system for end-users to maintain and deploy 
+    a (simple) web site in a friendly and effective way.
 Agent Model:
-  EasyWeb Client:
-    definition: |
-      The EasyWeb software-to-be, on the client machine
-    kind: software
-  EasyWeb Deploy:
-    definition: |
-      The EasyWeb software-to-be, on the deployment machine
-    kind: software
   Client:
-    definition: |
-      Client who owns the deployed website
+    definition: |-
+      Client who owns and maintains structure and content of the website
     kind: environment
   Engineer:
-    definition: |
+    definition: |-
       Engineer responsible of deployment stability, new features, and bug fixes
     kind: environment
-  RepoHolder:
-    definition: |
+  ClientAgent:
+    definition: |-
+      The software agent used by the client on his local machine
+    kind: software
+  ServerAgent:
+    definition: |-
+      The software agent used on the production Server deploying the website
+    kind: software
+  Repository:
+    definition: |-
       Version Control System Central Repository
     kind: environment
 Goal Model:
   Achieve[WebSite UpToDate With LocalCopy When Needed]:
-    definition: |
-      The production website shall be synchronized whenever the Client wants it 
-      to be up to date with her local copy
+    definition: |-
+      When the Client wants his website to be up to date with her local copy, 
+      the production version is eventually up-to-date
     refinement:
       subgoals: 
-        - Achieve[Synchronization Request Made]
-        - Achieve[WebSite UpToDate When SyncRequest Made]
-  Achieve[Synchronization Request Made]:
+        - Achieve[Deployment Request Made]
+        - Achieve[WebSite UpToDate On Deployment Request]
+  Achieve[Deployment Request Made]:
     definition:
-      When the Client want its website to be up to date with its local copy, she
-      mades an explicit request to the software
+      When the Client wants his website to be up to date with her local copy, 
+      she mades a "request for deployment" to the ClientAgent.
     assignment:
       agent: Client
-  Achieve[WebSite UpToDate When SyncRequest Made]:
+  Achieve[WebSite UpToDate On Deployment Request]:
+    definition:
+      When a request for deployment is received by the ClientAgent, the production
+      website is eventually up to date.
     refinement:
       subgoals:
-        - Achieve[Repository Synchronized When SyncRequest Made]
-        - Achieve[WebSite UpToDate From Synchronized Repo]
-  Achieve[Repository Synchronized When SyncRequest Made]:
+        - Achieve[Repository UpToDate On Deployment Request]
+        - Achieve[WebSite UpToDate From UpToDate Repository]
+  Achieve[Repository UpToDate On Deployment Request]:
+    definition:
+      When a request for deployment is received by the ClientAgent, the 
+      repository is eventually up to date with the Client's local copy.
     assignment:
-      agent: EasyWeb Client
-  Achieve[WebSite UpToDate From Synchronized Repo]:
+      agent: ClientAgent
+  Achieve[WebSite UpToDate From UpToDate Repository]:
+    definition:
+      When the repository is up to date with the Client's local copy, the 
+      production website is eventually up to date as well.
     refinements:
       - Achieve[WebSite UpToDate Through Repo Hooks]
       - Achieve[WebSite UpToDate Through Notification]
   Achieve[WebSite UpToDate Through Repo Hooks]:
     refinement:
       subgoals:
-        - Achieve[HookFired When Repo Synchronized]
+        - Achieve[HookFired When Repository Updated]
         - Achieve[WebSite UpToDate When HookReceived]
-  Achieve[HookFired When Repo Synchronized]:
+  Achieve[HookFired When Repository Updated]:
     assignment:
-      agent: RepoHolder
+      agent: Repository
   Achieve[WebSite UpToDate When HookReceived]:
     assignment: 
-      agent: EasyWeb Deploy
+      agent: ServerAgent
   Achieve[WebSite UpToDate Through Notification]:
     refinement:
       subgoals:
@@ -70,10 +81,10 @@ Goal Model:
         - Achieve[WebSite UpToDate When RepoSync Notified]
   Achieve[RepoSync Notified When Repo Synchronized]:
     assignment: 
-      agent: EasyWeb Client
+      agent: ClientAgent
   Achieve[WebSite UpToDate When RepoSync Notified]:
     assignment: 
-      agent: EasyWeb Deploy
+      agent: ServerAgent
 Variables Model:
   - name: PendingChanges
     definition: is there pending changes on the local copy?
@@ -97,7 +108,7 @@ Operation Model:
   - name: SyncLocal
     definition: Synchronize the local copy with bug-fixes and new features 
                 available in the repository.
-    performed-by: EasyWeb Client
+    performed-by: ClientAgent
     dom-pre:  BugFixesAvailable
     dom-post: not(BugFixesAvailable)
     req-pre:  
@@ -107,7 +118,7 @@ Operation Model:
       - Achieve[Repository BugFixes Applied To LocalCopy]
   - name: SyncRepo
     definition: Synchronize the repository with saved local changes
-    performed-by: EasyWeb Client
+    performed-by: ClientAgent
     dom-pre: HasLocalSavings
     dom-post: not(HasLocalSavings)
     req-pre:
@@ -121,9 +132,9 @@ Operation Model:
       - for: Maintain[Repo Synchronized If No PendingChanges and No BugFix Available]
         formal-def: not(PendingChanges) and not(BugFixesAvailable)
   - name: NotifyRepoSynced
-    definition: Send a notification to the EasyWeb Client that the repository
+    definition: Send a notification to the ClientAgent that the repository
                 has been updated
-    performed-by: EasyWeb Client
+    performed-by: ClientAgent
     dom-pre: not(RepoSyncNotified)
     dom-post: RepoSyncNotified
     req-trig:
@@ -131,7 +142,7 @@ Operation Model:
       formal-def: @not(HasLocalSavings)
   - name: SyncProd
     description: Synchronize the production server from the Repository
-    performed-by: EasyWeb Deploy
+    performed-by: ServerAgent
     dom-pre: not(ProductionUpToDate)
     dom-post: ProductionUpToDate
     req-trig:
@@ -139,7 +150,7 @@ Operation Model:
       formal-def: @RepoSyncNotified
   - name: Save
     definition: Save the pending changes of the local version
-    performed-by: EasyWeb Client
+    performed-by: ClientAgent
     dom-pre:  PendingChanges
     dom-post: not(PendingChanges)
     req-post: 
