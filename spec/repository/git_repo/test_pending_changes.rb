@@ -8,7 +8,12 @@ module WebSync
       `#{code}`
     end
 
+    def reset_repo_changes(working_dir)
+      `cd #{working_dir} && git reset --hard`
+    end
+
     let(:working_dir){ File.join(fixtures_folder, "gitrepo") }
+    let(:readme){ File.join(working_dir, "README.md") }
     let(:repo){ Repository::GitRepo.new(working_dir) }
 
     before(:all) {
@@ -18,6 +23,18 @@ module WebSync
 
     context "on a clean repository" do
       it{ should be_false }
+    end
+
+    context "on a repository with a changed file" do
+      before{ 
+        File.open(readme, "w"){|f| f << "new version"}
+      }
+      it{ 
+        should be_true 
+      }
+      after{
+        reset_repo_changes(working_dir)
+      }
     end
 
   end
