@@ -35,7 +35,7 @@ module WebSync
       def signal(event)
         return unless defined?(@listeners)
         @listeners.each do |match, block|
-          next unless match.nil? || match.=~(event)
+          next unless match.nil? || match === event
           block.call(self, event)
         end
       end
