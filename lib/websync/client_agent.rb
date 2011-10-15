@@ -42,7 +42,7 @@ module WebSync
     # DomPost
     #   not(bug_fixes_available?)
     # ReqPre for Avoid[GitMergesWhenPendingChanges]
-    #   not(has_pending_changes?)
+    #   not(pending_changes?)
     #
     def sync_local
       req_pre!(:sync_local, :pending_changes?, false) {
@@ -87,17 +87,31 @@ module WebSync
     # DomPre
     #   unpushed_commits?
     # DomPost
-    #   unpushed_commits!(false)
+    #   not(unpushed_commits?)
     # ReqPre for Avoid[BadDeployFalsePositive]
-    #   not(has_pending_changes?)
+    #   not(pending_changes?)
     # ReqPre for Maintain[BugFixesDeployedEarly] & Maintain[LinearHistory]
     #   not(bug_fixes_available?)
     # ReqTrig for Achieve[Repository Synchronized When SynRequest Made]
     #   sync_repo_requested
     # ReqTrig for Maintain[Repo Synchronized If No PendingChanges and No BugFix Available]
-    #   not(has_pending_changes?) and not(bug_fixes_available?)
+    #   not(pending_changes?) and not(bug_fixes_available?)
     #
     def sync_repo
+      req_pre!(:sync_repo, :pending_changes?, false) {
+        raise Error, "Unable to syncrhonize the repository; save pending changes first."
+      }
+      req_pre!(:sync_repo, :bug_fixes_available?, false) {
+        raise Error, "Unable to syncrhonize the repository; import bug fixes first."
+      }
+      if unpushed_commits?
+        working_dir.push_origin
+        dom_post!(:sync_repo, :pending_changes?, false)
+        dom_post!(:sync_repo, :bug_fixes_available?, false)
+        true
+      else
+        false
+      end
     end
 
     #
