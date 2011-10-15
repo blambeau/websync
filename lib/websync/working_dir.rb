@@ -72,6 +72,12 @@ module WebSync
           has_available_bug_fixes?)
       end
 
+      def save
+      end
+
+      def push_origin
+      end
+
       private 
 
       def gritrepo
