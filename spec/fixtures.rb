@@ -30,6 +30,16 @@ module WebSync
       end
     end
 
+    def a_modified_clone
+      @a_modified_clone ||= begin
+        the_bare_repository.clone(tmpdir("a_modified_clone")) do |wd|
+          wd.f_delete("README.md")
+          wd.f_write('ADDED.md', "this is an added file")
+          wd.f_append(".gitignore", "*.tmp\n")
+        end
+      end
+    end
+
     extend(self)
   end # module Fixtures
 end # module WebSync

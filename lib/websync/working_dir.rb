@@ -21,9 +21,19 @@ module WebSync
       File.open(File.join(fs_dir,path), "w"){|f| f << content}
     end
 
+    # Appends `content` to the file at `path`
+    def f_append(path, content)
+      File.open(File.join(fs_dir,path), "a"){|f| f << content}
+    end
+
     # Reads the content to the file at `path`
     def f_read(path)
       File.read(File.join(fs_dir,path))
+    end
+
+    # Removes the file at `path`
+    def f_delete(path)
+      FileUtils.rm_rf(File.join(fs_dir,path))
     end
 
     # Checks if a file exists

@@ -18,7 +18,6 @@ module WebSync
     }
 
     specify("it should have expected files") {
-      puts `ls -lA #{subject.fs_dir}`
       subject.exists?(".gitignore").should be_true
       subject.exists?("README.md").should be_true
       subject.exists?("ignored.txt").should be_false
