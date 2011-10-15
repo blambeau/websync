@@ -20,7 +20,9 @@ module WebSync
         repo = Grit::Repo.init(where)
         repo.remote_add("origin", path)
         repo.remote_update
-        WorkingDir::Git.new(repo)
+        wdir = WorkingDir::Git.new(repo)
+        yield(wdir) if block_given?
+        wdir
       end
 
       # Creates a bare git repository in `fs_dir`
