@@ -1,14 +1,6 @@
 module WebSync
   class Agent
 
-    # The bus instance to use for inter-agent communications
-    attr_reader :bus
-
-    # Creates an agent instance with a communication bus
-    def initialize(bus = nil)
-       @bus = bus
-    end
-
     ############################################################ Robustness
     protected
 
@@ -28,6 +20,29 @@ module WebSync
           raise AssertError, 
                 "ReqPost #{expected ? '' : '!'} #{expr} expected for #{operation}"
         end
+      end
+
+    ############################################################ Events
+    public
+
+      def listen(match = nil, &block)
+        @listeners ||= []
+        @listeners << [match, block]
+      end
+
+    protected
+
+      def signal(event)
+        return unless defined?(@listeners)
+        @listeners.each do |match, block|
+          next unless match.nil? || match.=~(event)
+          block.call(self, event)
+        end
+      end
+
+      def self.upon(agent, event, &block)
+        @upon ||= []
+        @upon << [agent, event, block]
       end
 
   end # class Agent
