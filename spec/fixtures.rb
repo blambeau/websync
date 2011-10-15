@@ -56,6 +56,15 @@ module WebSync
       end
     end
 
+    def a_forward_clone
+      @a_forward_clone ||= begin
+        the_bare_repository.clone(tmpdir("a_forward_clone")) do |wd|
+          wd.f_write("index.html", "Hello World!! and even more")
+          wd.save("And even more")
+        end
+      end
+    end
+
     extend(self)
   end # module Fixtures
 end # module WebSync
