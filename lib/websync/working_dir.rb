@@ -43,6 +43,8 @@ module WebSync
 
     class Git < WorkingDir
 
+      GIT_OPTS = {:raise => true}
+
       # Returns the list of pending changes on the local copy
       def pending_changes
         # pending changes are
@@ -62,9 +64,9 @@ module WebSync
 
       # Returns the list of unpulled bugfixes
       def available_bug_fixes
-        gritrepo.git.rev_list({}, "^master", "origin/master").
-                     split("\n").
-                     map{|id| gritrepo.commit(id)}
+        git.rev_list(GIT_OPTS, "^master", "origin/master").
+            split("\n").
+            map{|id| gritrepo.commit(id)}
       end
 
       # Is there bug fixes availables for the local copy?
@@ -74,9 +76,9 @@ module WebSync
 
       # Returns the list of unpushed commits
       def unpushed_commits
-        gritrepo.git.rev_list({}, "master", "^origin/master").
-                     split("\n").
-                     map{|id| gritrepo.commit(id)}
+        git.rev_list(GIT_OPTS, "master", "^origin/master").
+            split("\n").
+            map{|id| gritrepo.commit(id)}
       end
 
       # Does the local copy have unpushed commits?
@@ -96,18 +98,36 @@ module WebSync
         to_be_added = pending_changes.select{|f|
           f.untracked && f.type.nil?
         }
-        gritrepo.add(*to_be_added.map{|f| f.path})
-        gritrepo.commit_all(commit_message)
+        git.add(GIT_OPTS, *to_be_added.map{|f| f.path})
+        git.commit(GIT_OPTS.merge(:a => true, :m => true), commit_message)
       end
 
-      def push_origin(opts = {})
-        gritrepo.git.push(opts, "origin")
+      def push_origin
+        git.push(GIT_OPTS, "origin")
+      end
+
+      def save_and_push(commit_message)
+        save(commit_message) 
+        push_origin
+      end
+
+      def tag(tag_name)
+        git.tag(GIT_OPTS, tag_name)
+        git.push(GIT_OPTS, "origin", tag_name)
+      end
+
+      def reset(tag_name)
+        git.reset(GIT_OPTS.merge(:hard => true), tag_name)
       end
 
       private 
 
       def gritrepo
         @gritrepo ||= Grit::Repo.new(fs_dir)
+      end
+
+      def git
+        gritrepo.git
       end
 
     end # class Git
