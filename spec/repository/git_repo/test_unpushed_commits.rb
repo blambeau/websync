@@ -5,10 +5,6 @@ module WebSync
     let(:repo){ Repository::GitRepo.new(git_repo_client) }
     let(:gritrepo){ repo.send(:gritrepo) }
 
-    # Reset the repository after each test
-    after{ reset_git_repo_client }
-
-    # Does the repository have unpushed commits?
     subject{ repo.unpushed_commits }
 
     context "on an in-sync repository" do
@@ -33,8 +29,9 @@ module WebSync
           "Set content to hello.txt",
           "New unpushed commit"
         ])
+        repo.unpushed_commits?.should be_true
       }
-      specify{ repo.unpushed_commits?.should be_true }
+      after{ reset_git_repo_client }
     end
 
   end

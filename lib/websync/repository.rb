@@ -28,9 +28,16 @@ module WebSync
         gritrepo.status.any?{|f| (f.untracked && !f.ignored) || !f.type.nil? }
       end
 
+      # Returns the list of unpulled bugfixes
+      def bug_fixes_available
+        gritrepo.git.rev_list({}, "^master", "origin/master").
+                     split("\n").
+                     map{|id| gritrepo.commit(id)}
+      end
+
       # Is there bug fixes availables for the local copy?
       def bug_fixes_available?
-        false
+        !bug_fixes_available.empty?
       end
 
       # Returns the list of unpushed commits
