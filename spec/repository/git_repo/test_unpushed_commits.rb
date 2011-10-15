@@ -6,7 +6,7 @@ module WebSync
     let(:gritrepo){ repo.send(:gritrepo) }
 
     # Reset the repository after each test
-    #after{ reset_git_repo_client }
+    after{ reset_git_repo_client }
 
     # Does the repository have unpushed commits?
     subject{ repo.unpushed_commits }
@@ -20,7 +20,6 @@ module WebSync
 
     context "on an non in-sync repository" do
       before {
-        Grit.debug = true
         added = File.join(git_repo_client, "ADDED.md")
         File.open(added,"w"){|f| f << "content"}
         gritrepo.add(added)

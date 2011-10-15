@@ -2,7 +2,7 @@ task :"fixtures:create" do
   require 'fileutils'
   require 'grit'
   #Grit.git_binary = "git"
-  Grit.debug = true
+  #Grit.debug = true
 
   # a few paths
   fixtures        = "/tmp/websync-fixtures"
