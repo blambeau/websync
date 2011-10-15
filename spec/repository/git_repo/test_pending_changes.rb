@@ -6,10 +6,6 @@ module WebSync
     let(:readme){ File.join(git_repo_client, "README.md") }
     let(:added) { File.join(git_repo_client, "ADDED.md") }
 
-    # Reset the repository after each test
-    after{ reset_git_repo_client }
-
-    # Does the repository have pending changes?
     subject{ repo.pending_changes? }
 
     context "on a clean repository" do
@@ -25,6 +21,7 @@ module WebSync
       it{ 
         should be_true
       }
+      after{ reset_git_repo_client }
     end
 
     context "on a repository with a file deleted" do
@@ -34,6 +31,7 @@ module WebSync
       it{ 
         should be_true 
       }
+      after{ reset_git_repo_client }
     end
 
     context "on a repository with a file added" do
@@ -43,6 +41,7 @@ module WebSync
       it{ 
         should be_true 
       }
+      after{ reset_git_repo_client }
     end
 
   end
