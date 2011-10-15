@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'websync'
 require 'fileutils'
+require 'tmpdir'
 
 def fixtures_folder
   "/tmp/websync-fixtures"
