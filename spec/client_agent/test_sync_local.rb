@@ -4,6 +4,9 @@ module WebSync
 
     let(:agent){ ClientAgent.new(wdir) }
 
+    let(:events){ [] }
+    before{ agent.listen{|ag,evt| events << [ag, evt]} }
+
     context "on an in-sync working dir" do
       let(:wdir){ Fixtures.an_in_sync_clone }
       specify {
@@ -11,6 +14,7 @@ module WebSync
       }
       after {
         agent.pending_changes?.should be_false
+        events.should be_empty
       }
     end
 
@@ -29,7 +33,8 @@ module WebSync
         agent.sync_local.should be_true
       }
       after{
-        agent.bug_fixes_available?.should be_false 
+        agent.bug_fixes_available?.should be_false
+        events.should eq([[agent, :working_dir_synchronized]])
       }
     end
 
@@ -41,6 +46,7 @@ module WebSync
       after{
         agent.bug_fixes_available?.should be_false 
         agent.unpushed_commits?.should be_true
+        events.should eq([[agent, :working_dir_synchronized]])
       }
     end
 

@@ -5,9 +5,7 @@ module WebSync
     attr_reader :working_dir
 
     # Creates an agent instance
-    def initialize(bus, working_dir = nil)
-      bus, working_dir = working_dir, bus if working_dir.nil?
-      super(bus)
+    def initialize(working_dir = nil)
       @working_dir = working_dir
     end
 
@@ -53,6 +51,7 @@ module WebSync
       if bug_fixes_available?
         working_dir.rebase
         dom_post!(:sync_local, :bug_fixes_available?, false)
+        signal(:working_dir_synchronized)
         true
       else
         false
@@ -77,6 +76,7 @@ module WebSync
         working_dir.save(commit_message)
         dom_post!(:save, :pending_changes?, false)
         req_post!(:save, :unpushed_commits?, true)
+        signal(:working_dir_saved)
         true
       else
         false
@@ -110,11 +110,13 @@ module WebSync
         working_dir.push_origin
         dom_post!(:sync_repo, :pending_changes?, false)
         dom_post!(:sync_repo, :bug_fixes_available?, false)
+        signal(:repository_synchronized)
         true
       else
         false
       end
     end
+    upon(:user, :sync_repo_requested){ sync_repo }
 
   end # class ClientAgent
 end # end WebSync

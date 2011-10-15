@@ -2,7 +2,10 @@ require "spec_helper"
 module WebSync
   describe ClientAgent, "save" do
 
-    let(:agent){ ClientAgent.new(wdir) }
+    let(:agent) { ClientAgent.new(wdir) }
+
+    let(:events){ [] }
+    before{ agent.listen{|ag,evt| events << [ag, evt]} }
 
     context "on a working dir without pending changes" do
       let(:wdir){ Fixtures.an_in_sync_clone }
@@ -11,6 +14,7 @@ module WebSync
       }
       after {
         agent.pending_changes?.should be_false
+        events.should be_empty
       }
     end
 
@@ -21,6 +25,7 @@ module WebSync
       }
       after {
         agent.pending_changes?.should be_false
+        events.should eq([[agent, :working_dir_saved]])
       }
     end
 
