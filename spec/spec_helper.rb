@@ -3,4 +3,5 @@ require 'websync'
 require 'fileutils'
 require 'tmpdir'
 require 'fixtures'
+#Grit.debug = true
 
