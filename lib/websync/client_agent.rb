@@ -59,9 +59,14 @@ module WebSync
     # DomPost
     #   pending_changes!(false)
     # ReqPost for Avoid[AutoDeployOnSaving]
-    #   has_local_savings!
+    #   unpushed_commits!
     # 
-    def save
+    def save(commit_message)
+      return unless pending_changes?
+      working_dir.save(commit_message)
+      unless unpushed_commits?
+        raise AssertError, "DomPost: unpushed_commits? expected"
+      end
     end
 
     #
@@ -70,7 +75,7 @@ module WebSync
     # DomPre
     #   unpushed_commits?
     # DomPost
-    #   has_local_savings!(false)
+    #   unpushed_commits!(false)
     # ReqPre for Avoid[BadDeployFalsePositive]
     #   not(has_pending_changes?)
     # ReqPre for Maintain[BugFixesDeployedEarly] & Maintain[LinearHistory]
