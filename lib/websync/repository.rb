@@ -33,9 +33,16 @@ module WebSync
         false
       end
 
+      # Returns the list of unpushed commits
+      def unpushed_commits
+        gritrepo.git.rev_list({}, "master", "^origin/master").
+                     split("\n").
+                     map{|id| gritrepo.commit(id)}
+      end
+
       # Does the local copy have unpushed commits?
       def unpushed_commits?
-        false
+        !unpushed_commits.empty?
       end
 
       private 

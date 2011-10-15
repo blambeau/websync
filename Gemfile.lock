@@ -1,6 +1,6 @@
 GIT
   remote: https://blambeau@github.com/blambeau/grit.git
-  revision: 94f857962f7c802147c0de1f810988bbc0f6a508
+  revision: c6c46f17d16dc6431e5eef4dd30576207b36bf78
   specs:
     grit (2.4.1)
       diff-lcs (~> 1.1)

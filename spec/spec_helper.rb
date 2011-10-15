@@ -3,7 +3,7 @@ require 'websync'
 require 'fileutils'
 
 def fixtures_folder
-  File.expand_path("../fixtures", __FILE__)
+  "/tmp/websync-fixtures"
 end
 
 ###
@@ -25,5 +25,5 @@ end
 def reset_git_repo_client
   `cd #{git_repo_client}
    rm -rf ADDED.md
-   git reset --hard`
+   git reset --hard origin/master`
 end
