@@ -14,11 +14,19 @@ module WebSync
         FileUtils.rm_rf(the_bare_repository_folder)
         repo = Repository::Git.create(the_bare_repository_folder)
         repo.clone(tmpdir("bare_clone")) do |cl|
+
           cl.f_write("README.md", "Hey hey hey, this is the project!\n")
           cl.f_write("ignored.txt", "This is an ignored file\n")
           cl.f_write(".gitignore", "ignored.txt\n")
-          cl.save("Initial repository layout.")
-          cl.push_origin(:u => true)
+          cl.save_and_push("A first commit")
+
+          cl.f_write("index.html", "Hello World!")
+          cl.save_and_push("A first website version")
+          cl.tag("v1.0.0")
+
+          cl.f_write("index.html", "Hello World!!")
+          cl.f_write("htaccess", "something")
+          cl.save_and_push("A first bugfix")
         end
         repo
       end
@@ -40,6 +48,16 @@ module WebSync
       end
     end
 
+    def a_backwards_clone
+      @a_backwards_clone ||= begin
+        the_bare_repository.clone(tmpdir("a_backwards_clone")) do |wd|
+          wd.reset("v1.0.0")
+        end
+      end
+    end
+
     extend(self)
   end # module Fixtures
 end # module WebSync
+#Grit.debug = true
+#WebSync::Fixtures.a_backwards_clone
