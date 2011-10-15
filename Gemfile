@@ -12,5 +12,6 @@ group :release do
 end
 
 group :runtime do
-  gem "grit", :git => "https://blambeau@github.com/blambeau/grit.git"
+  #gem "grit", :git => "https://blambeau@github.com/blambeau/grit.git"
+  gem "grit", :path => File.expand_path("../../grit", __FILE__)
 end
