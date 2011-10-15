@@ -1,18 +1,29 @@
 module WebSync
   class ClientAgent
 
-    ############################################################ State Variables
+    # The working dir on which this client agent works
+    attr_reader :working_dir
 
-    # Is there pending changes on the local copy?
-    def pending_changes?
+    # Creates an agent instance
+    def initialize(working_dir)
+      @working_dir = working_dir
     end
 
-    # Is there bug fixes availables for the local copy?
+    ############################################################ State Variables
+
+    # Is there pending changes on the working copy?
+    def pending_changes?
+      working_dir.has_pending_changes?
+    end
+
+    # Is there bug fixes availables for the working copy?
     def bug_fixes_available?
+      working_dir.has_available_bug_fixes?
     end
 
     # Does the local copy have local savings?
-    def local_savings?
+    def unpushed_commits?
+      working_dir.has_unpushed_commits?
     end
 
     ############################################################ Operations
@@ -31,6 +42,13 @@ module WebSync
     #   not(has_pending_changes?)
     #
     def sync_local
+      if has_pending_changes?
+        raise Error, "Unable to synchronize a dirty working dir (save first)"
+      end
+      working_dir.rebase
+      if bug_fixes_available?
+        raise AssertError, "DomPost: not(bug_fixes_available?) expected"
+      end
     end
 
     #
@@ -50,7 +68,7 @@ module WebSync
     # Synchronize the repository with saved local changes
     #
     # DomPre
-    #   local_savings?
+    #   unpushed_commits?
     # DomPost
     #   has_local_savings!(false)
     # ReqPre for Avoid[BadDeployFalsePositive]
@@ -69,7 +87,7 @@ module WebSync
     # Send a notification to the Server that the repository has been updated.
     #
     # RegTrig for Achieve[RepoSync Notified When Repo Synchronized]
-    #   @not(local_savings?)
+    #   @not(unpushed_commits?)
     #
     def notify_repo_synced
     end

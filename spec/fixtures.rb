@@ -65,6 +65,16 @@ module WebSync
       end
     end
 
+    def a_forward_and_backwards_clone
+      @a_forward_and_backwards_clone ||= begin
+        the_bare_repository.clone(tmpdir("a_forward_and_backwards_clone")) do |wd|
+          wd.reset("v1.0.0")
+          wd.f_write("newpage.html", "A second page content")
+          wd.save("A second page")
+        end
+      end
+    end
+
     extend(self)
   end # module Fixtures
 end # module WebSync
