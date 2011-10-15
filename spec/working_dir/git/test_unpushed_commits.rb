@@ -21,7 +21,6 @@ module WebSync
         ])
         repo.has_unpushed_commits?.should be_true
       }
-      after{ reset_git_repo_client }
     end
 
   end
