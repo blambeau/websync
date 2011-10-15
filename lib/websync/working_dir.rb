@@ -1,22 +1,16 @@
 require 'grit'
 module WebSync
-  class Repository
-    class GitRepo < Repository
+  class WorkingDir
 
-      DEFAULT_OPTIONS = {
-        :origin => :origin
-      }
+    # The working directory
+    attr_reader :fs_dir
 
-      # The working directory
-      attr_reader :working_dir
+    # Creates a WorkingDir instance
+    def initialize(fs_dir)
+      @fs_dir = fs_dir
+    end
 
-      # Options
-      attr_reader :options
-
-      def initialize(working_dir, options = {})
-        @working_dir = working_dir
-        @options = DEFAULT_OPTIONS.merge(options)
-      end
+    class Git < WorkingDir
 
       # Is there pending changes on the local copy?
       def has_pending_changes?
@@ -55,9 +49,10 @@ module WebSync
       private 
 
       def gritrepo
-        @gritrepo ||= Grit::Repo.new(working_dir)
+        @gritrepo ||= Grit::Repo.new(fs_dir)
       end
 
-    end # class GitRepo
-  end # class Repository
+    end # class Git
+
+  end # class WorkingDir
 end # module WebSync

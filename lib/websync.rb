@@ -6,6 +6,6 @@ require "websync/loader"
 module WebSync
 
 end # module WebSync
-require 'websync/repository'
+require 'websync/working_dir'
 require 'websync/client_agent'
 require 'websync/server_agent'

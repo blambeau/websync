@@ -1,8 +1,8 @@
 require 'spec_helper'
 module WebSync
-  describe Repository::GitRepo, "pending_changes?" do
+  describe WorkingDir::Git, "pending_changes?" do
 
-    let(:repo){ Repository::GitRepo.new(git_repo_client) }
+    let(:repo){ WorkingDir::Git.new(git_repo_client) }
     let(:readme){ File.join(git_repo_client, "README.md") }
     let(:added) { File.join(git_repo_client, "ADDED.md") }
 

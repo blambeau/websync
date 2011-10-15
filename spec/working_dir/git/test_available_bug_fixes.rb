@@ -1,8 +1,8 @@
 require 'spec_helper'
 module WebSync
-  describe Repository::GitRepo, "available_bug_fixes" do
+  describe WorkingDir::Git, "available_bug_fixes" do
 
-    let(:repo){ Repository::GitRepo.new(git_repo_client) }
+    let(:repo){ WorkingDir::Git.new(git_repo_client) }
     let(:gritrepo){ repo.send(:gritrepo) }
 
     subject{ repo.available_bug_fixes }

@@ -1,8 +1,8 @@
 require 'spec_helper'
 module WebSync
-  describe Repository::GitRepo, "unpushed_commits" do
+  describe WorkingDir::Git, "unpushed_commits" do
 
-    let(:repo){ Repository::GitRepo.new(git_repo_client) }
+    let(:repo){ WorkingDir::Git.new(git_repo_client) }
     let(:gritrepo){ repo.send(:gritrepo) }
 
     subject{ repo.unpushed_commits }
