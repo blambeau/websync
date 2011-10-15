@@ -16,16 +16,28 @@ module WebSync
       @fs_dir = fs_dir
     end
 
+    # Writes `content` to the file at `path`
+    def f_write(path, content)
+      File.open(path, "w"){|f| f << content}
+    end
+
     class Git < WorkingDir
 
-      # Is there pending changes on the local copy?
-      def has_pending_changes?
+      # Returns the list of pending changes on the local copy
+      def pending_changes
         # pending changes are
         #   <=> either an untracked (but not ignored) or one whose status is not
         #       nil ('A', 'M', 'D')
         #   <=> any?{|f| f.untracked && !f.ignored} || any?{|f| !f.type.nil?}
         #   <=> any?{|f| (f.untracked && !f.ignored) || !f.type.nil? }
-        gritrepo.status.any?{|f| (f.untracked && !f.ignored) || !f.type.nil? }
+        gritrepo.status.select{|f|
+          (f.untracked && !f.ignored) || !f.type.nil?
+        }
+      end
+
+      # Is there pending changes on the local copy?
+      def has_pending_changes?
+        not(pending_changes.empty?)
       end
 
       # Returns the list of unpulled bugfixes

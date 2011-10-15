@@ -1,16 +1,17 @@
 require 'spec_helper'
 module WebSync
-  describe WorkingDir::Git, "pending_changes?" do
+  describe WorkingDir::Git, "pending_changes" do
 
     let(:repo){ WorkingDir::Git.new(git_repo_client) }
     let(:readme){ File.join(git_repo_client, "README.md") }
     let(:added) { File.join(git_repo_client, "ADDED.md") }
 
-    subject{ repo.has_pending_changes? }
+    subject{ repo.pending_changes }
 
     context "on a clean repository" do
-      it{
-        should be_false
+      specify{
+        repo.pending_changes.should be_empty
+        repo.has_pending_changes?.should be_false
       }
     end
 
@@ -18,8 +19,11 @@ module WebSync
       before{ 
         File.open(readme, "w"){|f| f << "new version"}
       }
-      it{ 
-        should be_true
+      it{
+        changes = repo.pending_changes
+        changes.size.should eq(1)
+        changes.all?{|c| c.type == "M"}
+        repo.has_pending_changes?.should be_true
       }
       after{ reset_git_repo_client }
     end
@@ -29,7 +33,10 @@ module WebSync
         FileUtils.rm(readme)
       }
       it{ 
-        should be_true 
+        changes = repo.pending_changes
+        changes.size.should eq(1)
+        changes.all?{|c| c.type == "D"}
+        repo.has_pending_changes?.should be_true
       }
       after{ reset_git_repo_client }
     end
@@ -39,7 +46,10 @@ module WebSync
         File.open(added, "w"){|f| f << "file content"}
       }
       it{ 
-        should be_true 
+        changes = repo.pending_changes
+        changes.size.should eq(1)
+        changes.all?{|c| c.untracked}
+        repo.has_pending_changes?.should be_true
       }
       after{ reset_git_repo_client }
     end
