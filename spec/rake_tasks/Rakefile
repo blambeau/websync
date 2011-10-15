@@ -1,0 +1,19 @@
+$LOAD_PATH.unshift File.expand_path('../../lib')
+require 'websync/rake_tasks'
+
+WebSync::RakeTasks.new do |ws|
+  ag = Object.new.extend(Module.new{
+    def save 
+      puts "Saved"
+    end
+
+    def sync_local 
+      puts "Working dir synchronized"
+    end
+
+    def sync_repo 
+      puts "Repository synchronized"
+    end
+  })
+  ws.add_client_agent(ag)
+end
