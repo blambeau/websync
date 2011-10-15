@@ -1,17 +1,17 @@
 require 'spec_helper'
 module WebSync
-  describe Repository::GitRepo, "bug_fixes_available" do
+  describe Repository::GitRepo, "available_bug_fixes" do
 
     let(:repo){ Repository::GitRepo.new(git_repo_client) }
     let(:gritrepo){ repo.send(:gritrepo) }
 
-    subject{ repo.bug_fixes_available }
+    subject{ repo.available_bug_fixes }
 
     context "on an in-sync repository" do
       it{
         should be_empty
       }
-      specify{ repo.bug_fixes_available?.should be_false }
+      specify{ repo.has_available_bug_fixes?.should be_false }
     end
 
     context "on an non in-sync repository" do
@@ -29,7 +29,7 @@ module WebSync
         subject.map{|c| c.short_message}.should eq([
           "New unpulled bugfix"
         ])
-        repo.bug_fixes_available?.should be_true 
+        repo.has_available_bug_fixes?.should be_true 
       }
       after{ reset_git_repo_client }
     end

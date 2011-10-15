@@ -6,7 +6,7 @@ module WebSync
     let(:readme){ File.join(git_repo_client, "README.md") }
     let(:added) { File.join(git_repo_client, "ADDED.md") }
 
-    subject{ repo.pending_changes? }
+    subject{ repo.has_pending_changes? }
 
     context "on a clean repository" do
       it{

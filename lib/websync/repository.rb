@@ -19,7 +19,7 @@ module WebSync
       end
 
       # Is there pending changes on the local copy?
-      def pending_changes?
+      def has_pending_changes?
         # pending changes are
         #   <=> either an untracked (but not ignored) or one whose status is not
         #       nil ('A', 'M', 'D')
@@ -29,15 +29,15 @@ module WebSync
       end
 
       # Returns the list of unpulled bugfixes
-      def bug_fixes_available
+      def available_bug_fixes
         gritrepo.git.rev_list({}, "^master", "origin/master").
                      split("\n").
                      map{|id| gritrepo.commit(id)}
       end
 
       # Is there bug fixes availables for the local copy?
-      def bug_fixes_available?
-        !bug_fixes_available.empty?
+      def has_available_bug_fixes?
+        not(available_bug_fixes.empty?)
       end
 
       # Returns the list of unpushed commits
@@ -48,8 +48,8 @@ module WebSync
       end
 
       # Does the local copy have unpushed commits?
-      def unpushed_commits?
-        !unpushed_commits.empty?
+      def has_unpushed_commits?
+        not(unpushed_commits.empty?)
       end
 
       private 

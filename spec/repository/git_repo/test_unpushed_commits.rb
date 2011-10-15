@@ -11,7 +11,7 @@ module WebSync
       it{
         should be_empty
       }
-      specify{ repo.unpushed_commits?.should be_false }
+      specify{ repo.has_unpushed_commits?.should be_false }
     end
 
     context "on an non in-sync repository" do
@@ -29,7 +29,7 @@ module WebSync
           "Set content to hello.txt",
           "New unpushed commit"
         ])
-        repo.unpushed_commits?.should be_true
+        repo.has_unpushed_commits?.should be_true
       }
       after{ reset_git_repo_client }
     end
