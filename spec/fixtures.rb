@@ -33,45 +33,55 @@ module WebSync
     end
 
     def an_in_sync_clone 
-      @an_in_sync_clone ||= begin
-        the_bare_repository.clone(tmpdir("in_sync_clone"))
-      end
+      @an_in_sync_clone ||= an_in_sync_clone!
+    end
+
+    def an_in_sync_clone!
+      the_bare_repository.clone(tmpdir("in_sync_clone"))
     end
 
     def a_modified_clone
-      @a_modified_clone ||= begin
-        the_bare_repository.clone(tmpdir("a_modified_clone")) do |wd|
-          wd.f_delete("README.md")
-          wd.f_write('ADDED.md', "this is an added file")
-          wd.f_append(".gitignore", "*.tmp\n")
-        end
+      @a_modified_clone ||= a_modified_clone!
+    end
+
+    def a_modified_clone!
+      the_bare_repository.clone(tmpdir("a_modified_clone")) do |wd|
+        wd.f_delete("README.md")
+        wd.f_write('ADDED.md', "this is an added file")
+        wd.f_append(".gitignore", "*.tmp\n")
       end
     end
 
     def a_backwards_clone
-      @a_backwards_clone ||= begin
-        the_bare_repository.clone(tmpdir("a_backwards_clone")) do |wd|
-          wd.reset("v1.0.0")
-        end
+      @a_backwards_clone ||= a_backwards_clone!
+    end
+
+    def a_backwards_clone!
+      the_bare_repository.clone(tmpdir("a_backwards_clone")) do |wd|
+        wd.reset("v1.0.0")
       end
     end
 
     def a_forward_clone
-      @a_forward_clone ||= begin
-        the_bare_repository.clone(tmpdir("a_forward_clone")) do |wd|
-          wd.f_write("index.html", "Hello World!! and even more")
-          wd.save("And even more")
-        end
+      @a_forward_clone ||= a_forward_clone!
+    end
+
+    def a_forward_clone!
+      the_bare_repository.clone(tmpdir("a_forward_clone")) do |wd|
+        wd.f_write("index.html", "Hello World!! and even more")
+        wd.save("And even more")
       end
     end
 
     def a_forward_and_backwards_clone
-      @a_forward_and_backwards_clone ||= begin
-        the_bare_repository.clone(tmpdir("a_forward_and_backwards_clone")) do |wd|
-          wd.reset("v1.0.0")
-          wd.f_write("newpage.html", "A second page content")
-          wd.save("A second page")
-        end
+      @a_forward_and_backwards_clone ||= a_forward_and_backwards_clone!
+    end
+
+    def a_forward_and_backwards_clone!
+      the_bare_repository.clone(tmpdir("a_forward_and_backwards_clone")) do |wd|
+        wd.reset("v1.0.0")
+        wd.f_write("newpage.html", "A second page content")
+        wd.save("A second page")
       end
     end
 

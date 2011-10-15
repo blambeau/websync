@@ -42,7 +42,7 @@ module WebSync
     #   not(has_pending_changes?)
     #
     def sync_local
-      if has_pending_changes?
+      if pending_changes?
         raise Error, "Unable to synchronize a dirty working dir (save first)"
       end
       working_dir.rebase
