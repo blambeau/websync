@@ -64,7 +64,7 @@ module WebSync
 
       # Returns the list of unpulled bugfixes
       def available_bug_fixes
-        git.rev_list(GIT_OPTS, "^master", "origin/master").
+        git.rev_list(git_opts, "^master", "origin/master").
             split("\n").
             map{|id| gritrepo.commit(id)}
       end
@@ -76,7 +76,7 @@ module WebSync
 
       # Returns the list of unpushed commits
       def unpushed_commits
-        git.rev_list(GIT_OPTS, "master", "^origin/master").
+        git.rev_list(git_opts, "master", "^origin/master").
             split("\n").
             map{|id| gritrepo.commit(id)}
       end
@@ -98,12 +98,12 @@ module WebSync
         to_be_added = pending_changes.select{|f|
           f.untracked && f.type.nil?
         }
-        git.add(GIT_OPTS, *to_be_added.map{|f| f.path})
-        git.commit(GIT_OPTS.merge(:a => true, :m => true), commit_message)
+        git.add(git_opts, *to_be_added.map{|f| f.path})
+        git.commit(git_opts(:a => true, :m => true), commit_message)
       end
 
       def push_origin
-        git.push(GIT_OPTS, "origin")
+        git.push(git_opts, "origin")
       end
 
       def save_and_push(commit_message)
@@ -112,12 +112,16 @@ module WebSync
       end
 
       def tag(tag_name)
-        git.tag(GIT_OPTS, tag_name)
-        git.push(GIT_OPTS, "origin", tag_name)
+        git.tag(git_opts, tag_name)
+        git.push(git_opts, "origin", tag_name)
       end
 
       def reset(tag_name)
-        git.reset(GIT_OPTS.merge(:hard => true), tag_name)
+        git.reset(git_opts(:hard => true), tag_name)
+      end
+
+      def rebase
+        git.rebase(git_opts, "origin", "master")
       end
 
       private 
@@ -128,6 +132,10 @@ module WebSync
 
       def git
         gritrepo.git
+      end
+
+      def git_opts(opts = {})
+        GIT_OPTS.merge(:chdir => fs_dir).merge(opts)
       end
 
     end # class Git
