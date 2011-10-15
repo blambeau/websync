@@ -32,40 +32,52 @@ module WebSync
     # Synchronize the local copy with bug-fixes and new features available in 
     # the repository.
     #
+    # Return true if something has been done, false otherwise. This provides
+    # simple feedback on the DomPre.
+    #
     # Operationalizes
     #   Achieve[Repository BugFixes Applied To LocalCopy]
     # DomPre
     #   bug_fixes_available?
     # DomPost
-    #   bug_fixes_available!(false)
+    #   not(bug_fixes_available?)
     # ReqPre for Avoid[GitMergesWhenPendingChanges]
     #   not(has_pending_changes?)
     #
     def sync_local
-      if pending_changes?
+      req_pre!(:sync_local, :pending_changes?, false) {
         raise Error, "Unable to synchronize a dirty working dir (save first)"
-      end
-      working_dir.rebase
+      }
       if bug_fixes_available?
-        raise AssertError, "DomPost: not(bug_fixes_available?) expected"
+        working_dir.rebase
+        dom_post!(:sync_local, :bug_fixes_available?, false)
+        true
+      else
+        false
       end
     end
 
     #
     # Save the pending changes of the local version
     #
+    # Return true if something has been done, false otherwise. This provides
+    # simple feedback on the DomPre.
+    #
     # DomPre
     #   pending_changes?
     # DomPost
-    #   pending_changes!(false)
+    #   not(pending_changes?)
     # ReqPost for Avoid[AutoDeployOnSaving]
-    #   unpushed_commits!
+    #   unpushed_commits?
     # 
     def save(commit_message)
-      return unless pending_changes?
-      working_dir.save(commit_message)
-      unless unpushed_commits?
-        raise AssertError, "DomPost: unpushed_commits? expected"
+      if pending_changes?
+        working_dir.save(commit_message)
+        dom_post!(:save, :pending_changes?, false)
+        req_post!(:save, :unpushed_commits?, true)
+        true
+      else
+        false
       end
     end
 
@@ -96,6 +108,27 @@ module WebSync
     #
     def notify_repo_synced
     end
+
+    ############################################################ Robustness
+    private 
+
+      def req_pre!(operation, expr, expected)
+        yield unless self.send(expr) == expected
+      end
+
+      def dom_post!(operation, expr, expected)
+        unless self.send(expr) == expected
+          raise AssertError, 
+                "DomPost #{expected ? '' : '!'} #{expr} expected for #{operation}"
+        end
+      end
+
+      def req_post!(operation, expr, expected)
+        unless self.send(expr) == expected
+          raise AssertError, 
+                "ReqPost #{expected ? '' : '!'} #{expr} expected for #{operation}"
+        end
+      end
 
   end # class ClientAgent
 end # end WebSync
