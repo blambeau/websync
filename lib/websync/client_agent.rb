@@ -1,11 +1,13 @@
 module WebSync
-  class ClientAgent
+  class ClientAgent < Agent
 
     # The working dir on which this client agent works
     attr_reader :working_dir
 
     # Creates an agent instance
-    def initialize(working_dir)
+    def initialize(bus, working_dir = nil)
+      bus, working_dir = working_dir, bus if working_dir.nil?
+      super(bus)
       @working_dir = working_dir
     end
 
@@ -113,36 +115,6 @@ module WebSync
         false
       end
     end
-
-    #
-    # Send a notification to the Server that the repository has been updated.
-    #
-    # RegTrig for Achieve[RepoSync Notified When Repo Synchronized]
-    #   @not(unpushed_commits?)
-    #
-    def notify_repo_synced
-    end
-
-    ############################################################ Robustness
-    private 
-
-      def req_pre!(operation, expr, expected)
-        yield unless self.send(expr) == expected
-      end
-
-      def dom_post!(operation, expr, expected)
-        unless self.send(expr) == expected
-          raise AssertError, 
-                "DomPost #{expected ? '' : '!'} #{expr} expected for #{operation}"
-        end
-      end
-
-      def req_post!(operation, expr, expected)
-        unless self.send(expr) == expected
-          raise AssertError, 
-                "ReqPost #{expected ? '' : '!'} #{expr} expected for #{operation}"
-        end
-      end
 
   end # class ClientAgent
 end # end WebSync
