@@ -3,7 +3,7 @@ module WebSync
   describe Repository::Git, "#clone" do
 
     before(:all){ 
-      FileUtils.rm_rf(origin = Dir.mktmpdir("origin"))
+      FileUtils.rm_rf(origin = Dir.mktmpdir("websync_test_clone_origin"))
       @origin = Repository::Git.create(origin)
     }
 
@@ -12,10 +12,11 @@ module WebSync
       subject{ @origin.clone(where) }
 
       context "on a non-existing directory" do
-        let(:where){ Dir.mktmpdir }
+        let(:where){ Dir.mktmpdir("websync_test_clone_existing") }
         before{ FileUtils.rm_rf(where) }
         specify{
           subject.should be_a(WorkingDir)
+          subject.exists?(".gitignore").should be_true
           subject.in_sync?.should be_true
         }
       end
@@ -36,6 +37,8 @@ module WebSync
         seen = nil
         @origin.clone(where){|cl| seen = cl}
         seen.should be_a(WorkingDir)
+        seen.exists?(".gitignore").should be_true
+        seen.in_sync?.should be_true
       }
     end
 

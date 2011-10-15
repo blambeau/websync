@@ -10,6 +10,7 @@ module WebSync
       specify{
         subject.should be_a(Repository)
         File.directory?(File.join(where, "info")).should be_true
+        File.file?(File.join(where, "refs", "heads", "master")).should be_true
       }
     end
 

@@ -18,7 +18,17 @@ module WebSync
 
     # Writes `content` to the file at `path`
     def f_write(path, content)
-      File.open(path, "w"){|f| f << content}
+      File.open(File.join(fs_dir,path), "w"){|f| f << content}
+    end
+
+    # Reads the content to the file at `path`
+    def f_read(path)
+      File.read(File.join(fs_dir,path))
+    end
+
+    # Checks if a file exists
+    def exists?(f)
+      File.exists?(File.join(fs_dir, f))
     end
 
     class Git < WorkingDir
@@ -72,10 +82,16 @@ module WebSync
           has_available_bug_fixes?)
       end
 
-      def save
+      def save(commit_message)
+        to_be_added = pending_changes.select{|f|
+          f.untracked && f.type.nil?
+        }
+        gritrepo.add(*to_be_added.map{|f| f.path})
+        gritrepo.commit_all(commit_message)
       end
 
-      def push_origin
+      def push_origin(opts = {})
+        gritrepo.git.push(opts, "origin")
       end
 
       private 

@@ -11,15 +11,22 @@ module WebSync
 
     def the_bare_repository
       @the_bare_repository ||= begin
+        FileUtils.rm_rf(the_bare_repository_folder)
         repo = Repository::Git.create(the_bare_repository_folder)
         repo.clone(tmpdir("bare_clone")) do |cl|
           cl.f_write("README.md", "Hey hey hey, this is the project!\n")
           cl.f_write("ignored.txt", "This is an ignored file\n")
           cl.f_write(".gitignore", "ignored.txt\n")
-          cl.save
-          cl.push_origin
+          cl.save("Initial repository layout.")
+          cl.push_origin(:u => true)
         end
         repo
+      end
+    end
+
+    def an_in_sync_clone 
+      @an_in_sync_clone ||= begin
+        the_bare_repository.clone(tmpdir("in_sync_clone"))
       end
     end
 
