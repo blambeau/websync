@@ -11,7 +11,7 @@ module WebSync
     # DomPre  
     #   not(production_up_to_date?)
     # DomPost
-    #   production_up_to_date!
+    #   production_up_to_date?
     # RegTrig for Achieve[WebSite UpToDate When RepoSync Notified]
     #   repo_sync_notified
     #
