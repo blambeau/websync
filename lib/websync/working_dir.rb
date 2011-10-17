@@ -99,7 +99,7 @@ module WebSync
           f.untracked && f.type.nil?
         }
         git.add(git_opts, *to_be_added.map{|f| f.path})
-        git.commit(git_opts(:a => true, :m => true), commit_message)
+        git.commit(git_opts(), '-a', '-m', commit_message)
       end
 
       def push_origin

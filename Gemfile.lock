@@ -1,5 +1,6 @@
-PATH
-  remote: /home/blambeau/work/devel/grit
+GIT
+  remote: https://blambeau@github.com/blambeau/grit.git
+  revision: d6c4abaca9f7bf5b0306ded97f2eda10c24eb06c
   specs:
     grit (2.4.1)
       diff-lcs (~> 1.1)
