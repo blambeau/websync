@@ -1,4 +1,5 @@
 require 'websync'
+require 'rake/dsl_definition'
 module WebSync
   class RakeTasks < Agent
     include Rake::DSL
