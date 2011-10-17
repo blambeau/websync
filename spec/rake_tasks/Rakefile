@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib')
 require 'websync/rake_tasks'
 
 WebSync::RakeTasks.new do |ws|
+  ws.silent = true
   ag = Object.new.extend(Module.new{
     def save(message)
       puts "Saved: #{message}"
