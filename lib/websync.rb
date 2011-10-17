@@ -1,5 +1,4 @@
 require "websync/version"
-require "websync/loader"
 require "fileutils"
 require "grit"
 #

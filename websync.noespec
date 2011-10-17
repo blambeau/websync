@@ -5,6 +5,7 @@ template-info:
   version: 1.5.1
   manifest:
     lib/__lower__/loader.rb:
+      ignore: true
       safe-override: false
     Gemfile:
       safe-override: false
@@ -29,4 +30,5 @@ variables:
     - {name: rspec,        version: "~> 2.6.0",  groups: [test, release]}
     - {name: wlang,        version: "~> 0.10.2", groups: [release      ]}
     - {name: grit,         version: "~> 2.4.1",  groups: [runtime      ]}
+    - {name: http,         version: "= 0.0.1",   groups: [runtime      ]}
 
