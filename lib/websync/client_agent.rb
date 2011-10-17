@@ -6,10 +6,7 @@ module WebSync
 
     # Creates an agent instance
     def initialize(working_dir = nil)
-      if working_dir.respond_to?(:to_str)
-        working_dir = WorkingDir::Git.new(working_dir)
-      end
-      @working_dir = working_dir
+      @working_dir = WorkingDir.coerce(working_dir)
     end
 
     ############################################################ State Variables
