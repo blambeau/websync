@@ -85,6 +85,10 @@ module WebSync
       end
     end
 
+    def a_corrupted_clone
+      WorkingDir::Git.new(Dir.mktmpdir("a_corrupted_clone"))
+    end
+
     extend(self)
   end # module Fixtures
 end # module WebSync

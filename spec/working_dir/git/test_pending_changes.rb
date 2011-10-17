@@ -26,6 +26,13 @@ module WebSync
       }
     end
 
+    context "on a corrupted repository" do
+      let(:repo){ Fixtures.a_corrupted_clone }
+      specify{ 
+        lambda{ subject }.should raise_error(Grit::InvalidGitRepositoryError)
+      }
+    end
+
   end
 end
 
