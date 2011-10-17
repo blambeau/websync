@@ -14,3 +14,4 @@ def capture_io
 ensure
   $stdout, $stderr = stdout, stderr
 end
+

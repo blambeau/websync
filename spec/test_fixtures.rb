@@ -24,7 +24,7 @@ module WebSync
     }
 
     specify("files should have expected content") {
-      subject.f_read(".gitignore").should eq("ignored.txt\n")
+      subject.f_read(".gitignore").should eq("ignored.txt\ntmp\n")
     }
 
   end

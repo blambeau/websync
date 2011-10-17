@@ -6,6 +6,7 @@ require "grit"
 #
 module WebSync
 
+  autoload :Passenger, "websync/passenger"
 end # module WebSync
 require 'websync/errors'
 require 'websync/repository'

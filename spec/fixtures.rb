@@ -17,7 +17,7 @@ module WebSync
 
           cl.f_write("README.md", "Hey hey hey, this is the project!\n")
           cl.f_write("ignored.txt", "This is an ignored file\n")
-          cl.f_write(".gitignore", "ignored.txt\n")
+          cl.f_write(".gitignore", "ignored.txt\ntmp\n")
           cl.save_and_push("A first commit")
 
           cl.f_write("index.html", "Hello World!")

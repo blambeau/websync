@@ -36,6 +36,13 @@ module WebSync
       File.open(File.join(fs_dir,path), "a"){|f| f << content}
     end
 
+    # Touches the file at `path`
+    def f_touch(path)
+      f = File.join(fs_dir,path)
+      FileUtils.mkdir_p(File.dirname(f))
+      FileUtils.touch(f)
+    end
+
     # Reads the content to the file at `path`
     def f_read(path)
       File.read(File.join(fs_dir,path))
@@ -50,6 +57,7 @@ module WebSync
     def exists?(f)
       File.exists?(File.join(fs_dir, f))
     end
+    alias :f_exists? :exists?
 
     class Git < WorkingDir
 
