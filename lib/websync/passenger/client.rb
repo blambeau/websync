@@ -1,5 +1,3 @@
-require 'json'
-require 'http'
 module WebSync
   module Passenger
     #
@@ -14,7 +12,9 @@ module WebSync
         yield(self) if block_given?
       end
 
-      def call
+      def call(agent, event, *args)
+        require 'json'
+        require 'http'
         Http.accept(:json).post(url)
       end
 
