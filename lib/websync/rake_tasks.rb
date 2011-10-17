@@ -13,8 +13,8 @@ module WebSync
     end
 
     def add_client_agent(agent)
-      listen(:save_request) do |ag,evt|
-        agent.save
+      listen(:save_request) do |ag,evt,message|
+        agent.save(message)
       end
       listen(:import_request) do |ag,evt|
         agent.sync_local
@@ -29,8 +29,8 @@ module WebSync
       def install_tasks(namespace)
         namespace(namespace) do
           desc "Save the current website version"
-          task(:save){ 
-            signal(:save_request) 
+          task(:save, :message){|t,args|
+            signal(:save_request, args[:message]) 
           }
           desc "Import bug fixes and new features from the repository"
           task(:import){ 

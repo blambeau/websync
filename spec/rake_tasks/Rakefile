@@ -3,8 +3,8 @@ require 'websync/rake_tasks'
 
 WebSync::RakeTasks.new do |ws|
   ag = Object.new.extend(Module.new{
-    def save 
-      puts "Saved"
+    def save(message)
+      puts "Saved: #{message}"
     end
 
     def sync_local 

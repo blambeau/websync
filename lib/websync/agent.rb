@@ -32,11 +32,11 @@ module WebSync
 
     protected
 
-      def signal(event)
+      def signal(event, *args)
         return unless defined?(@listeners)
         @listeners.each do |match, block|
           next unless match.nil? || match === event
-          block.call(self, event)
+          block.call(self, event, *args)
         end
       end
 
