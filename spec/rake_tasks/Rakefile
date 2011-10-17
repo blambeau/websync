@@ -15,6 +15,9 @@ WebSync::RakeTasks.new do |ws|
     def sync_repo 
       puts "Repository synchronized"
     end
+
+    def listen(*args)
+    end
   })
   ws.add_client_agent(ag)
 end

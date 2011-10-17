@@ -33,6 +33,9 @@ module WebSync
           agent.sync_repo
         end
       end
+      agent.listen do |ag,evt,*args|
+        signal(evt, *args)
+      end
     end
 
     def safe(msg)
