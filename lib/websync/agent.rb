@@ -25,9 +25,9 @@ module WebSync
     ############################################################ Events
     public
 
-      def listen(match = nil, &block)
+      def listen(match = nil, callable = nil, &block)
         @listeners ||= []
-        @listeners << [match, block]
+        @listeners << [match, callable || block]
       end
 
     protected

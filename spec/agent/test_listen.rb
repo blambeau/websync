@@ -26,5 +26,19 @@ module WebSync
       }
     end
 
+    context "when passed a callable" do
+      let(:fired){ [] }
+      let(:callable){ Proc.new{ fired << true } }
+      before{ 
+        agent.listen(:event, callable) 
+      }
+      specify{
+        lambda{ agent.send(:signal, :event) }.should_not raise_error
+      }
+      after{
+        fired.should eq([true])
+      }
+    end
+
   end
 end
