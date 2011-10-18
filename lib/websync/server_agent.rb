@@ -34,7 +34,7 @@ module WebSync
     #
     def synchronize
       req_pre!(:synchronize, :pending_changes?, false) {
-        raise Error, "Unable to synchronize a dirty working dir (save first)"
+        raise Error, "Unable to synchronize a dirty working dir"
       }
       if production_up_to_date?
         false

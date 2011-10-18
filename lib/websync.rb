@@ -5,8 +5,6 @@ require "grit"
 # End-user oriented website synchronization
 #
 module WebSync
-
-  autoload :Passenger, "websync/passenger"
 end # module WebSync
 require 'websync/errors'
 require 'websync/repository'
