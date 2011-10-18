@@ -11,7 +11,7 @@ module WebSync
       end
 
       def call(env)
-        if env["REQUEST_METHOD"] = "POST"
+        if env["REQUEST_METHOD"] == "POST"
           @working_dir.rebase
           @working_dir.f_touch("tmp/restart.txt")
           [200, {"Content-Type" => "text/plain"}, ["Ok"]]
