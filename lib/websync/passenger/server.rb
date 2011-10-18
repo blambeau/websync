@@ -13,6 +13,7 @@ module WebSync
       def call(env)
         if env["REQUEST_METHOD"] == "POST"
           @working_dir.rebase
+          @working_dir.sh("bundle install --deployment --local")
           @working_dir.f_touch("tmp/restart.txt")
           [200, {"Content-Type" => "text/plain"}, ["Ok"]]
         else
