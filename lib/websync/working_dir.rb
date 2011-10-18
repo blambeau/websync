@@ -139,7 +139,7 @@ module WebSync
       end
 
       def rebase
-        git.rebase(git_opts, "origin", "master")
+        git.rebase(git_opts, "origin/master")
       end
 
       private 
