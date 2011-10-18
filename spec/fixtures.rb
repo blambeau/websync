@@ -2,8 +2,14 @@ module WebSync
   module Fixtures
 
     def tmpdir(*args)
-      Dir.mktmpdir(*args)
-    end
+      dir = Dir.mktmpdir(*args)
+       begin
+        FileUtils.rm_rf(dir) if File.exists?(dir)
+        FileUtils.mkdir_p(dir)
+      rescue
+      end
+      dir
+    end 
 
     def the_bare_repository_folder
       @the_bare_repository_folder ||= tmpdir("bare_origin")
@@ -86,7 +92,7 @@ module WebSync
     end
 
     def a_corrupted_clone
-      WorkingDir::Git.new(Dir.mktmpdir("a_corrupted_clone"))
+      WorkingDir::Git.new(tmpdir("a_corrupted_clone"))
     end
 
     extend(self)
