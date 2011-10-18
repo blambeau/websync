@@ -14,7 +14,7 @@ GEM
     http (0.0.1)
     mime-types (1.16)
     posix-spawn (0.3.6)
-    rack (1.3.4)
+    rack (1.3.5)
     rack-protection (1.1.4)
       rack
     rack-test (0.6.1)
