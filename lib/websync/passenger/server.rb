@@ -7,7 +7,6 @@ module WebSync
 
       # Create the server instance
       def initialize(wdir)
-        super
         @working_dir = WorkingDir.coerce(wdir)
       end
 
