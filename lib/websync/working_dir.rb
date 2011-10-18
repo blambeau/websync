@@ -71,7 +71,7 @@ module WebSync
       GIT_OPTS = {:raise => true}
 
       def update_info
-        git.remote(git_opts, "update")
+        git.remote(git_opts.merge(:raise => false), "update")
       end
 
       # Returns the list of pending changes on the local copy
