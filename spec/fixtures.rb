@@ -2,13 +2,7 @@ module WebSync
   module Fixtures
 
     def tmpdir(*args)
-      dir = Dir.mktmpdir(*args)
-       begin
-        FileUtils.rm_rf(dir) if File.exists?(dir)
-        FileUtils.mkdir_p(dir)
-      rescue
-      end
-      dir
+      Dir.mktmpdir(*args)
     end 
 
     def the_bare_repository_folder
