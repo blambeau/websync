@@ -26,6 +26,13 @@ module WebSync
       end
     end
 
+    # Executes a command in a shell
+    def sh(command)
+      Dir.chdir(fs_dir) do
+        `#{command}`
+      end
+    end
+
     # Writes `content` to the file at `path`
     def f_write(path, content)
       File.open(File.join(fs_dir,path), "w"){|f| f << content}
@@ -62,6 +69,10 @@ module WebSync
     class Git < WorkingDir
 
       GIT_OPTS = {:raise => true}
+
+      def update_info
+        git.remote(git_opts, "update")
+      end
 
       # Returns the list of pending changes on the local copy
       def pending_changes
@@ -139,6 +150,7 @@ module WebSync
       end
 
       def rebase
+        update_info
         git.rebase(git_opts, "origin/master")
       end
 
