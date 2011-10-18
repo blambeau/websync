@@ -15,7 +15,7 @@ module WebSync
       def call(agent, event, *args)
         require 'json'
         require 'http'
-        Http.accept(:json).post(url)
+        Http.post(url)
       end
 
     end # class Client
