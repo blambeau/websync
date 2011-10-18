@@ -12,9 +12,6 @@ module WebSync
         @working_dir = WorkingDir.coerce(wdir)
       end
 
-      set :raise_errors, true
-      set :show_exceptions, false
-
       post '/' do
         @working_dir.rebase
         @working_dir.f_touch("tmp/restart.txt")
