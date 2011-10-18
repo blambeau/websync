@@ -1,10 +1,9 @@
-require 'sinatra/base'
 module WebSync
   module Passenger
     #
     # Server-side agent for Passenger-oriented deployment.
     #
-    class Server < Sinatra::Base
+    class Server
 
       # Create the server instance
       def initialize(wdir)
@@ -12,10 +11,14 @@ module WebSync
         @working_dir = WorkingDir.coerce(wdir)
       end
 
-      post '/' do
-        @working_dir.rebase
-        @working_dir.f_touch("tmp/restart.txt")
-        "true"
+      def call(env)
+        if env["REQUEST_METHOD"] = "POST"
+          @working_dir.rebase
+          @working_dir.f_touch("tmp/restart.txt")
+          [200, {"Content-Type" => "text/plain"}, ["Ok"]]
+        else
+          [404, {"Content-Type" => "text/plain"}, ["Not found"]]
+        end
       end
 
     end # class Server
