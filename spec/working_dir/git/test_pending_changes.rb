@@ -16,11 +16,11 @@ module WebSync
       let(:repo){ Fixtures.a_modified_clone }
       specify{
         Hash[repo.pending_changes.map{|c|
-          [c.path, c.type || "TBA"]
+          [c.path, c.operation]
         }].should eq({
-          "README.md"  => "D",
-          "ADDED.md"   => "TBA",
-          ".gitignore" => "M"
+          "README.md"  => "remove",
+          "ADDED.md"   => "add",
+          ".gitignore" => "update"
         })
         repo.has_pending_changes?.should be_true
       }

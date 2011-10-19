@@ -68,6 +68,18 @@ module WebSync
 
     class Git < WorkingDir
 
+      module Change
+        OPERATIONS = {
+          "M" => "update",
+          "A" => "add",
+          "D" => "remove",
+          "C" => "resolve"
+        }
+        def operation
+          untracked ? "add" : OPERATIONS[type]
+        end
+      end
+
       GIT_OPTS = {:raise => true}
 
       def update_info
@@ -83,7 +95,7 @@ module WebSync
         #   <=> any?{|f| (f.untracked && !f.ignored) || !f.type.nil? }
         gritrepo.status.select{|f|
           (f.untracked && !f.ignored) || !f.type.nil?
-        }
+        }.map{|f| f.extend(Change)}
       end
 
       # Is there pending changes on the local copy?
