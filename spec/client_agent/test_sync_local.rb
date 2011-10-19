@@ -9,6 +9,9 @@ module WebSync
 
     context "on an in-sync working dir" do
       let(:wdir){ Fixtures.an_in_sync_clone }
+      before {
+        agent.may_sync_local?.should be_false
+      }
       specify {
         agent.sync_local.should be_false
       }
@@ -20,6 +23,9 @@ module WebSync
 
     context "on a working dir with pending changes" do
       let(:wdir){ Fixtures.a_modified_clone }
+      before {
+        agent.may_sync_local?.should be_false
+      }
       specify {
         lambda {
           agent.sync_local
@@ -29,6 +35,9 @@ module WebSync
 
     context "on a pure backwards clone" do
       let(:wdir){ Fixtures.a_backwards_clone! }
+      before {
+        agent.may_sync_local?.should be_true
+      }
       specify {
         agent.sync_local.should be_true
       }
@@ -40,6 +49,9 @@ module WebSync
 
     context "on a pure forward and backwards clone" do
       let(:wdir){ Fixtures.a_forward_and_backwards_clone! }
+      before {
+        agent.may_sync_local?.should be_true
+      }
       specify {
         agent.sync_local.should be_true
       }

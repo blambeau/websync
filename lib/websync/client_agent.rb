@@ -29,6 +29,13 @@ module WebSync
     ############################################################ Operations
 
     #
+    # Checks if the precondition of sync_local is currently true
+    #
+    def may_sync_local?
+      bug_fixes_available? and not(pending_changes?)
+    end
+
+    #
     # Synchronize the local copy with bug-fixes and new features available in 
     # the repository.
     #
@@ -59,6 +66,13 @@ module WebSync
     end
 
     #
+    # Checks if the precondition of save is currently true
+    #
+    def may_save?
+      pending_changes?
+    end
+
+    #
     # Save the pending changes of the local version
     #
     # Return true if something has been done, false otherwise. This provides
@@ -81,6 +95,13 @@ module WebSync
       else
         false
       end
+    end
+
+    #
+    # Checks if the precondition of sync_repo is currently true
+    #
+    def may_sync_repo?
+      unpushed_commits? and not(pending_changes?) and not(bug_fixes_available?)
     end
 
     #
