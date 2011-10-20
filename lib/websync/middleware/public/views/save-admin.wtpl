@@ -1,10 +1,10 @@
-<div class="section">
-  <div class="header">
-    <button id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
+<div class="section container">
+  <div class="header row">
+    <button class="btn primary span4" id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
     ?{model.may_save?}{
-      <p class="explain ok">Your local version presents the changes below. You may save them at any time!</p>
+      <h3 class="span12 explain ok">Your local version presents the changes below. You may save them at any time!</h3>
     }{
-      <p class="explain neutral">Nothing to save for now.</p>
+      <h3 class="span12 explain neutral">Nothing to save for now.</h3>
     }
   </div>
   <div id="save-content" class="content">
@@ -16,26 +16,19 @@
       <p class="feedback"></p>
       <button id="save-req-button">Save!</button>
     </form>
-    <ul>
     ?{!model.to_be_updated.empty?}{
-      <li>
-        <p>Files modified (will be updated on the production website)</p>
-        <<+{changes_table.wtpl with changes: model.to_be_updated}
-      </li>
+      <h4>Files modified (will be updated on the production website)</h4>
+      <<+{changes_table.wtpl with changes: model.to_be_updated}
     }
 
     ?{!model.to_be_added.empty?}{
-      <li>
-        <p>New files (will be added to the production website)</p>
-        <<+{changes_table.wtpl with changes: model.to_be_added}
-      </li>
+      <h4>New files (will be added to the production website)</h4>
+      <<+{changes_table.wtpl with changes: model.to_be_added}
     }
 
     ?{!model.to_be_removed.empty?}{
-      <li>
-        <p>Missing files (will be removed from the production website)</p>
-        <<+{changes_table.wtpl with changes: model.to_be_removed}
-      </li>
+      <h4>Missing files (will be removed from the production website)</h4>
+      <<+{changes_table.wtpl with changes: model.to_be_removed}
     }
     </ul>
   </div>

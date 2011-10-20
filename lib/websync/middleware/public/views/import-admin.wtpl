@@ -1,10 +1,10 @@
-<div class="section">
-  <div class="header">
-    <button id="import-show-button" ?{!model.may_sync_local?}{disabled}>Download new version</button>
+<div class="section container">
+  <div class="header row">
+    <button class="btn primary span4" id="import-show-button" ?{!model.may_sync_local?}{disabled}>Download new version</button>
     ?{model.may_sync_local?}{
-      <p class="explain ok">A new version is available! Click to download.</p>
+      <h3 class="span12 explain ok">A new version is available! Click to download.</h3>
     }{
-      <p class="explain neutral">Nothing new in here...</p>
+      <h3 class="span12 explain neutral">Nothing new in here...</h3>
     }
   </div>
   <div id="import-content" class="content">
@@ -12,7 +12,7 @@
   </div>
   <script>
     $(document).ready(function(){
-      $("#import-show-button").button();
+      //$("#import-show-button").button();
       $("#import-show-button").click(function() {
         websync.ui.toggleContent("#import-content");
         return false;

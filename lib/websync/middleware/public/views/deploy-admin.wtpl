@@ -1,10 +1,10 @@
-<div class="section">
-  <div class="header">
-    <button id="deploy-show-button" ?{!model.may_sync_repo?}{disabled}>Deploy to production</button>
+<div class="section container">
+  <div class="header row">
+    <button class="btn primary span4" id="deploy-show-button" ?{!model.may_sync_repo?}{disabled}>Deploy to production</button>
     ?{model.may_sync_repo?}{
-      <p class="explain ok">Your production website may now be updated!</p>
+      <h3 class="span12 explain ok">Your production website may now be updated!</h3>
     }{
-      <p class="explain neutral">${model.explain_no_deploy}</p>
+      <h3 class="span12 explain neutral">${model.explain_no_deploy}</h3>
     }
   </div>
   <div id="deploy-content" class="content">

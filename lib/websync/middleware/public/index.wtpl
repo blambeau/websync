@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>WebSync - Administration</title>
-    <link rel="stylesheet" href="css/websync-admin.css" />
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css"/>
     <script src="js/jquery-1.6.4.min.js"></script>
     <script src="js/websync-admin.js"></script>
     <!--[if lt IE 9]>
@@ -17,14 +17,19 @@
     </script>
   </head>
   <body>
-    <h1>WebSync &mdash; Administration</h1>
-    <div id="changes"></div>
-
-    <div id="deploy-dialog" title="Deploy web site" style="display: none">
-      <form>
-        <p>Are you sure?</p>
-      </form>
-      <p class="feedback"></p>
+    <div class="topbar"> 
+      <div class="fill"> 
+        <div class="container"> 
+          <span class="brand">WebSync</span> 
+          <ul class="nav"> 
+            <li><a href="/">~&gt; Local Web Site</a></li> 
+            <li class="active"><a href="#">Changes</a></li> 
+          </ul> 
+        </div> 
+      </div> 
+    </div> 
+    <div class="container">
+      <div id="changes"></div>
     </div>
   </body>
 </html>
