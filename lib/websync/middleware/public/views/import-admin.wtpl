@@ -1,8 +1,8 @@
 <div class="section">
   <form>
-    <input id="import-button" value="Download new version" ?{!model.may_import?}{disabled}/>
+    <input id="import-button" value="Download new version" ?{!model.may_sync_local?}{disabled}/>
   </form>
-  ?{model.may_import?}{
+  ?{model.may_sync_local?}{
     <p class="explain ok">A new version is available! Click to download.</p>
   }{
     <p class="explain neutral">Nothing new in here...</p>

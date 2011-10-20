@@ -1,8 +1,8 @@
 <div class="section">
   <form>
-    <input id="deploy-req-button" value="Deploy to production" ?{!model.may_deploy?}{disabled}>
+    <input id="deploy-req-button" value="Deploy to production" ?{!model.may_sync_repo?}{disabled}>
   </form>
-  ?{model.may_deploy?}{
+  ?{model.may_sync_repo?}{
     <p class="explain ok">Your production website may now be updated!</p>
   }{
     <p class="explain neutral">${model.explain_no_deploy}</p>

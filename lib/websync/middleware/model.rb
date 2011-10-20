@@ -6,18 +6,19 @@ module WebSync
 
       def initialize(agent)
         @agent = agent
+        @cache = {}
       end
 
-      def working_dir
-        agent.working_dir
+      def method_missing(name, *args, &block)
+        if args.empty? && block.nil?
+          @cache[name] ||= agent.send(name, *args, &block)
+        else
+          agent.send(name, *args, &block)
+        end
       end
 
       def pending_changes
-        @pending_changes ||= working_dir.pending_changes
-      end
-
-      def pending_changes?
-        not(pending_changes.empty?)
+        working_dir.pending_changes
       end
 
       def to_be_added
@@ -30,18 +31,6 @@ module WebSync
 
       def to_be_removed
         pending_changes.select{|c| c.operation == "remove"}
-      end
-
-      def may_import?
-        @may_import ||= agent.may_sync_local?
-      end
-
-      def may_save?
-        @may_save ||= agent.may_save?
-      end
-
-      def may_deploy?
-        @may_deploy ||= agent.may_sync_repo?
       end
 
       def explain_no_deploy
