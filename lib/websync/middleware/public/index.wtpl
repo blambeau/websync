@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>WebSync - Administration</title>
+    <link rel="stylesheet" href="css/websync-admin.css" />
+    <script src="js/jquery-1.6.4.min.js"></script>
+    <script src="js/websync-admin.js"></script>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+      $(document).ready(function() {
+        webSyncInstrument('', false);
+        webSyncRefreshView("changes");
+      });
+    </script>
+  </head>
+  <body>
+    <h1>WebSync &mdash; Administration</h1>
+    <div id="changes"></div>
+
+    <div id="deploy-dialog" title="Deploy web site" style="display: none">
+      <form>
+        <p>Are you sure?</p>
+      </form>
+      <p class="feedback"></p>
+    </div>
+    <div id="save-dialog" title="Message for the save point" style="display: none">
+      <form id="save-form" style="text-align: center;">
+        <textarea id="save-message" style="width: 360px" rows="8"></textarea>
+      </form>
+      <p class="feedback"></p>
+    </div>
+  </body>
+</html>

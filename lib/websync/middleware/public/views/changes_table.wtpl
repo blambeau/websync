@@ -1,0 +1,17 @@
+<table class="changes">
+  <thead>
+    <tr>
+      <th>path</th>
+      <th class="actions">actions</th>
+    </tr>
+  </thead>
+  *{changes using each_with_index as c,i}{
+  <tbody>
+    <tr ?{i%2 != 0}{class="odd"}>
+      <td>${c.path}</td>
+      <td></td>
+    </tr>
+  </tbody>
+  }
+</table>
+

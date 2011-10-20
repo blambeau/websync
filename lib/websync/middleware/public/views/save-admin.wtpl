@@ -1,0 +1,52 @@
+<div class="section">
+  <form>
+    <input id="save-req-button" value="Save local changes" ?{!model.may_save?}{disabled}>
+  </form>
+
+  ?{model.may_save?}{
+    <p class="explain ok">Your local version presents the changes below. You may save them at any time!</p>
+    <ul>
+    ?{!model.to_be_updated.empty?}{
+      <li>
+        <p>Files modified (will be updated on the production website)</p>
+        <<+{changes_table.wtpl with changes: model.to_be_updated}
+      </li>
+    }
+
+    ?{!model.to_be_added.empty?}{
+      <li>
+        <p>New files (will be added to the production website)</p>
+        <<+{changes_table.wtpl with changes: model.to_be_added}
+      </li>
+    }
+
+    ?{!model.to_be_removed.empty?}{
+      <li>
+        <p>Missing files (will be removed from the production website)</p>
+        <<+{changes_table.wtpl with changes: model.to_be_removed}
+      </li>
+    }
+    </ul>
+  }{
+    <p class="explain neutral">Nothing to save for now.</p>
+  }
+  <script>
+    $(document).ready(function(){
+      $("#save-req-button").button();
+      $("#save-req-button").click(function() {
+        dialogStart({
+          selector: "#save-dialog",
+          onOk: function(callback) {
+            webSyncSave($("#save-message").val(), callback);
+          },
+          onClose: function(success) {
+            if (success) { 
+              $("#save-message").val("");
+              webSyncRefreshView("changes");
+            }
+          }
+        });
+      });
+    });
+  </script>
+</div>

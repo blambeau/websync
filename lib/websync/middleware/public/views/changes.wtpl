@@ -1,0 +1,3 @@
+<<+{import-admin.wtpl share all}
+<<+{deploy-admin.wtpl share all}
+<<+{save-admin.wtpl share all}

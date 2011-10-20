@@ -1,0 +1,28 @@
+<div class="section">
+  <form>
+    <input id="deploy-req-button" value="Deploy to production" ?{!model.may_deploy?}{disabled}>
+  </form>
+  ?{model.may_deploy?}{
+    <p class="explain ok">Your production website may now be updated!</p>
+  }{
+    <p class="explain neutral">${model.explain_no_deploy}</p>
+  }
+  <script>
+    $(document).ready(function(){
+      $("#deploy-req-button").button();
+      $("#deploy-req-button").click(function() {
+        dialogStart({
+          selector: "#deploy-dialog",
+          onOk: function(callback) {
+            webSyncDeploy(callback);
+          },
+          onClose: function(success) {
+            if (success) { 
+              webSyncRefreshView("changes");
+            }
+          }
+        });
+      });
+    });
+  </script>
+</div>

@@ -13,8 +13,8 @@ module WebSync
       }
       specify{
         lambda{ 
-          agent.send(:signal, :event0)
-          agent.send(:signal, :event1)
+          agent.signal(:event0)
+          agent.signal(:event1)
         }.should_not raise_error
       }
       after {
@@ -33,7 +33,7 @@ module WebSync
         agent.listen(:event, callable) 
       }
       specify{
-        lambda{ agent.send(:signal, :event) }.should_not raise_error
+        lambda{ agent.signal(:event) }.should_not raise_error
       }
       after{
         fired.should eq([true])

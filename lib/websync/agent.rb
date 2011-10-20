@@ -30,8 +30,6 @@ module WebSync
         @listeners << [match, callable || block]
       end
 
-    protected
-
       def signal(event, *args)
         return unless defined?(@listeners)
         @listeners.each do |match, block|
@@ -39,6 +37,8 @@ module WebSync
           block.call(self, event, *args)
         end
       end
+
+    protected
 
       def self.upon(agent, event, &block)
         @upon ||= []
