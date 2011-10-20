@@ -32,7 +32,7 @@ body {
   margin: .5em .4em .5em 0; }
 
 .section {
-  border-top: 1px solid #111111;
+  margin-bottom: 40px;
   clear: both; }
 .section form {
   display: block;
@@ -41,6 +41,7 @@ body {
 .section input {
   width: 200px; }
 .section p.explain {
+  padding-top: 10px;
   font-size: 1.2em; 
   width: 500px; }
 .section p.neutral {
@@ -55,34 +56,35 @@ body {
 .section ul li {
   padding: 5px; }
 
-table.changes {
+#changes table {
+  margin-top: 30px;
+  padding-left: 50px;
   width: 100%;
-  border:1px solid #000000;
   border-spacing: 0px; }
-table.changes thead th {
-  background: url(images/bg_th.gif) left;
+#changes table thead th {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   height: 21px;
-  color: #FFFFFF;
   font-size: 0.8em;
   font-family: Arial;
   font-weight: bold;
   padding: 0px 7px;
   margin: 20px 0px 0px;
   text-align: left; }
-table.changes thead th.actions {
+#changes table thead th.actions {
   width: 60px; 
   text-align: right; }
-table.changes tbody tr {  background: #ffffff; }
-table.changes tbody tr.odd {  background: #f0f0f0; }
-table.changes tbody th {
+#changes table tbody tr {  background: #ffffff; }
+#changes table tbody tr.odd {  background: #f0f0f0; }
+#changes table tbody th {
   background: url(images/arrow_white.gif) left center no-repeat;
   background-position: 5px;
   padding-left: 40px !important; }
-table.changes tbody tr.odd th {
+#changes table tbody tr.odd th {
   background: url(images/arrow_grey.gif) left center no-repeat;
   background-position: 5px;
   padding-left: 40px !important; }
-table.changes tbody th, tbody td {
+#changes table tbody th, tbody td {
   font-size: 0.8em;
   /*line-height: 1.4em;*/
   font-family: Arial, Helvetica, sans-serif;
@@ -90,30 +92,30 @@ table.changes tbody th, tbody td {
   padding: 2px 7px;
   border-bottom: 1px solid #800000;
   text-align: left; }
-table.changes tbody a {
+#changes table tbody a {
   color: #000000;
   font-weight: bold;
   text-decoration: none; }
-table.changes tbody a:hover {
+#changes table tbody a:hover {
   color: #ffffff;
   text-decoration: underline; }
-table.changes tbody tr:hover th {
+#changes table tbody tr:hover th {
   background: #800000 url(images/arrow_red.gif) left center no-repeat;
   background-position: 5px;
   color: #ffffff; }
-table.changes tbody tr.odd:hover th {
+#changes table tbody tr.odd:hover th {
   background: #000000 url(images/arrow_black.gif) left center no-repeat;
   background-position: 5px;
   color: #ffffff; }
-table.changes tbody tr:hover th a, tr.odd:hover th a  {
+#changes table tbody tr:hover th a, tr.odd:hover th a  {
      color: #ffffff; }
-table.changes tbody tr:hover td, tr:hover td a, tr.odd:hover td, tr.odd:hover td a {
+#changes table tbody tr:hover td, tr:hover td a, tr.odd:hover td, tr.odd:hover td a {
   background: #800000;
   color: #ffffff; }
-table.changes tbody tr.odd:hover td, tr.odd:hover td a{
+#changes table tbody tr.odd:hover td, tr.odd:hover td a{
   background: #000000;
   color: #ffffff; }
-table.changes tfoot th, tfoot td {
+#changes table tfoot th, tfoot td {
   background: #ffffff url(images/bg_footer.gif) repeat-x bottom;
   font-size: 0.8em;
   color: #ffffff;

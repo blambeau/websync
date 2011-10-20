@@ -11,9 +11,9 @@ module WebSync
 
       def method_missing(name, *args, &block)
         if args.empty? && block.nil?
-          @cache[name] ||= agent.send(name, *args, &block)
+          @cache[name] ||= delegate(name, *args, &block)
         else
-          agent.send(name, *args, &block)
+          delegate(name, *args, &block)
         end
       end
 
@@ -44,6 +44,27 @@ module WebSync
           "Unable to deploy. I must confess that I don't know why."
         end
       end
+
+      def commit_history
+        unpushed = unpushed_commits
+        if unpushed.empty?
+          working_dir.send(:gritrepo).commits
+        else
+          working_dir.send(:gritrepo).commits(unpushed.last.id)
+        end
+      end
+
+      private
+
+        def delegate(method, *args, &block)
+          if agent.respond_to?(method)
+            agent.send(method, *args, &block)
+          elsif working_dir.respond_to?(method)
+            working_dir.send(method, *args, &block)
+          else
+            raise NoMethodError, "No such method #{method}"
+          end
+        end
 
     end # class Model
   end # class Middleware

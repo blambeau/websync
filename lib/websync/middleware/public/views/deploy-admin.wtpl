@@ -7,6 +7,7 @@
   }{
     <p class="explain neutral">${model.explain_no_deploy}</p>
   }
+  <<+{commits.wtpl with commits: model.unpushed_commits, history: model.commit_history}
   <script>
     $(document).ready(function(){
       $("#deploy-req-button").button();
