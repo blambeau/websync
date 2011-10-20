@@ -32,14 +32,19 @@ body {
   margin: .5em .4em .5em 0; }
 
 .section {
-  margin-bottom: 40px;
-  clear: both; }
-.section form {
-  display: block;
-  float: right;
-  padding: 10px 0px; }
-.section input {
+  clear: both;
+  margin-bottom: 20px; }
+.section .header button {
+  display: block; 
+  float: right; 
   width: 200px; }
+.section .content {
+  clear: both; 
+  padding-bottom: 10px; }
+.section .content form {
+  margin-top: 10px;
+  font-size: 0.9em;
+  text-align: right; }
 .section p.explain {
   padding-top: 10px;
   font-size: 1.2em; 
@@ -55,6 +60,8 @@ body {
   list-style: square; }
 .section ul li {
   padding: 5px; }
+.section .content {
+  display:none }
 
 #changes table {
   margin-top: 30px;

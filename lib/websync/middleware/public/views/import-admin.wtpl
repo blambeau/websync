@@ -1,16 +1,22 @@
 <div class="section">
-  <form>
-    <input id="import-button" value="Download new version" ?{!model.may_sync_local?}{disabled}/>
-  </form>
-  ?{model.may_sync_local?}{
-    <p class="explain ok">A new version is available! Click to download.</p>
-  }{
-    <p class="explain neutral">Nothing new in here...</p>
-  }
-  <<+{commits.wtpl with commits: model.available_bug_fixes}
+  <div class="header">
+    <button id="import-show-button" ?{!model.may_sync_local?}{disabled}>Download new version</button>
+    ?{model.may_sync_local?}{
+      <p class="explain ok">A new version is available! Click to download.</p>
+    }{
+      <p class="explain neutral">Nothing new in here...</p>
+    }
+  </div>
+  <div id="import-content" class="content">
+    <<+{commits.wtpl with commits: model.available_bug_fixes}
+  </div>
   <script>
     $(document).ready(function(){
-      $("#import-button").button();
+      $("#import-show-button").button();
+      $("#import-show-button").click(function() {
+        websync.ui.toggleContent("#import-content");
+        return false;
+      });
     });
   </script>
 </div>

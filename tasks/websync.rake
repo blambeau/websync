@@ -1,3 +1,4 @@
+desc %q{Launches websync on a given repository}
 task :websync, :where do |t, args|
   root = File.expand_path('../..', __FILE__)
   $LOAD_PATH.unshift File.join(root, 'lib')

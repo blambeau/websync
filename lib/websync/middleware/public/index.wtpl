@@ -26,11 +26,5 @@
       </form>
       <p class="feedback"></p>
     </div>
-    <div id="save-dialog" title="Message for the save point" style="display: none">
-      <form id="save-form" style="text-align: center;">
-        <textarea id="save-message" style="width: 360px" rows="8"></textarea>
-      </form>
-      <p class="feedback"></p>
-    </div>
   </body>
 </html>

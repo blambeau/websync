@@ -1,3 +1,4 @@
+?{!commits.empty?}{
 <table class="commits">
   <thead>
     <tr>
@@ -7,18 +8,6 @@
     </tr>
   </thead>
   *{commits using each_with_index as c,i}{
-  <tbody>
-    <tr ?{i%2 != 0}{class="odd"}>
-      <td width="150px">${c.date}</td>
-      <td width="150px">${c.author.name}</td>
-      <td>${c.short_message}</td>
-    </tr>
-  </tbody>
-  }
-</table>
-?{knows?(:history)}{
-<table class="commits">
-  *{history using each_with_index as c,i}{
   <tbody>
     <tr ?{i%2 != 0}{class="odd"}>
       <td width="150px">${c.date}</td>

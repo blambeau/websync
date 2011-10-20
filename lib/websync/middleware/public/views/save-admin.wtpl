@@ -1,10 +1,21 @@
 <div class="section">
-  <form>
-    <input id="save-req-button" value="Save local changes" ?{!model.may_save?}{disabled}>
-  </form>
-
-  ?{model.may_save?}{
-    <p class="explain ok">Your local version presents the changes below. You may save them at any time!</p>
+  <div class="header">
+    <button id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
+    ?{model.may_save?}{
+      <p class="explain ok">Your local version presents the changes below. You may save them at any time!</p>
+    }{
+      <p class="explain neutral">Nothing to save for now.</p>
+    }
+  </div>
+  <div id="save-content" class="content">
+    <form id="save-form">
+      <label for="summary">Summary</label>
+      <input type="text" name="summary" value=""/><br/>
+      <label for="description">Description</label>
+      <textarea style="width: 360px" rows="8"></textarea>
+      <p class="feedback"></p>
+      <button id="save-req-button">Save!</button>
+    </form>
     <ul>
     ?{!model.to_be_updated.empty?}{
       <li>
@@ -27,12 +38,14 @@
       </li>
     }
     </ul>
-  }{
-    <p class="explain neutral">Nothing to save for now.</p>
-  }
+  </div>
   <script>
     $(document).ready(function(){
-      $("#save-req-button").button();
+      $("#save-show-button, #save-req-button").button();
+      $("#save-show-button").click(function() {
+        websync.ui.toggleContent("#save-content");
+        return false;
+      });
       $("#save-req-button").click(function() {
         dialogStart({
           selector: "#save-dialog",
