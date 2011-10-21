@@ -50,7 +50,7 @@ module WebSync
 
       specify "save-admin" do
         get '/view/save-admin'
-        last_response.body.should =~ /Your local version presents the changes below/
+        last_response.body.should =~ /The changes below can be saved at any time/
         last_response.body.should =~ /Files modified/
         last_response.body.should =~ /New files/
         last_response.body.should =~ /Missing files/
