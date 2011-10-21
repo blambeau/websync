@@ -1,4 +1,4 @@
-<div class="section container">
+<div id="deploying" class="section container">
   <div class="header row">
     <button class="btn primary span4" id="deploy-show-button" ?{!model.may_sync_repo?}{disabled}>Deploy to production</button>
     ?{model.may_sync_repo?}{
@@ -7,34 +7,28 @@
       <h3 class="span12 explain neutral">${model.explain_no_deploy}</h3>
     }
   </div>
-  <div id="deploy-content" class="content">
+  <div class="content">
     <<+{commits.wtpl with commits: model.unpushed_commits}
-    <form>
-      <button id="deploy-req-button">Deploy!</button>
+    <form class="row">
+      <p id="deploy-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
+      <button class="btn success offset12 span4" id="deploy-req-button">Deploy!</button>
     </form>
   </div>
   <script>
     $(document).ready(function(){
-      $("#deploy-show-button, #deploy-req-button").button();
       $("#deploy-show-button").click(function() {
-        websync.ui.toggleContent("#deploy-content");
+        websync.ui.toggleContent("deploying");
         return false;
       });
-      /*
       $("#deploy-req-button").click(function() {
-        dialogStart({
-          selector: "#deploy-dialog",
-          onOk: function(callback) {
-            webSyncDeploy(callback);
-          },
-          onClose: function(success) {
-            if (success) { 
-              webSyncRefreshView("changes");
-            }
-          }
+        $("#deploy-ajax-loader, #deploy-req-button").toggle();
+        websync.deploy(function(fdbk) {
+          websync.ui.say({message: fdbk.message,
+                          msgType: fdbk.result});
+          websync.ui.refresh("changes");
         });
+        return false;
       });
-      */
     });
   </script>
 </div>

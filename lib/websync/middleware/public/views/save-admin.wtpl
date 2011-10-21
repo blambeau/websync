@@ -1,4 +1,4 @@
-<div class="section container">
+<div id="saving" class="section container">
   <div class="header row">
     <button class="btn primary span4" id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
     ?{model.may_save?}{
@@ -7,51 +7,48 @@
       <h3 class="span12 explain neutral">Nothing to save for now.</h3>
     }
   </div>
-  <div id="save-content" class="content">
-    <form id="save-form">
-      <label for="summary">Summary</label>
-      <input type="text" name="summary" value=""/><br/>
-      <label for="description">Description</label>
-      <textarea style="width: 360px" rows="8"></textarea>
-      <p class="feedback"></p>
-      <button id="save-req-button">Save!</button>
-    </form>
+  <div class="content">
     ?{!model.to_be_updated.empty?}{
       <h4>Files modified (will be updated on the production website)</h4>
       <<+{changes_table.wtpl with changes: model.to_be_updated}
     }
-
     ?{!model.to_be_added.empty?}{
       <h4>New files (will be added to the production website)</h4>
       <<+{changes_table.wtpl with changes: model.to_be_added}
     }
-
     ?{!model.to_be_removed.empty?}{
       <h4>Missing files (will be removed from the production website)</h4>
       <<+{changes_table.wtpl with changes: model.to_be_removed}
     }
-    </ul>
+    <form id="save-form">
+      <div class="row">
+        <label class="span4" for="summary">Summary</label>
+        <input class="span12" type="text" name="summary" value=""/>
+      </div>
+      <div class="row">
+        <label class="span4" for="description">Description</label>
+        <textarea class="span12" rows="8"></textarea>
+      </div>
+      <div class="row">
+        <p id="save-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
+        <button class="btn success offset12 span4" id="save-req-button">Save!</button>
+      </div>
+    </form>
   </div>
   <script>
     $(document).ready(function(){
-      $("#save-show-button, #save-req-button").button();
       $("#save-show-button").click(function() {
-        websync.ui.toggleContent("#save-content");
+        websync.ui.toggleContent("saving");
         return false;
       });
       $("#save-req-button").click(function() {
-        dialogStart({
-          selector: "#save-dialog",
-          onOk: function(callback) {
-            webSyncSave($("#save-message").val(), callback);
-          },
-          onClose: function(success) {
-            if (success) { 
-              $("#save-message").val("");
-              webSyncRefreshView("changes");
-            }
-          }
+        $("#save-ajax-loader, #save-req-button").toggle();
+        websync.save($("#save-form").serialize(), function(fdbk) {
+          websync.ui.say({message: fdbk.message,
+                          msgType: fdbk.result});
+          websync.ui.refresh("changes");
         });
+        return false;
       });
     });
   </script>

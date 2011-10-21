@@ -1,16 +1,20 @@
-/*body {*/
-/*  font-family: 'Nunito', 'Palatino', sans-serif;*/
-/*  font-size: 14px;*/
-/*  color: #212122;*/
-/*}*/
-
 #changes {
-  margin-top: 60px; }
+  margin-top: 80px; }
 
-/*.ajax-loader {*/
-/*  display: inline;*/
-/*  margin: .5em .4em .5em 0; }*/
+#say {
+  text-align: center;
+  position: fixed;
+  top: 40px;
+  width: 600px;
+  left: 50%;
+  margin-left: -300px; 
+  display: none; }
 
+.section .ajax-loader {
+  text-align: right; 
+  vertical-align: middle;
+  line-height: normal; 
+  display: none;}
 .section {
   padding-top: 10px;
   /* border-top: 1px dashed #222222; */
@@ -25,7 +29,15 @@
   color: orange; }
 .section .content {
   padding-top: 20px;
-  display: none }
+  display: none; }
+
+.section .content form {
+  padding: 0px; margin: 0px; }
+.section .content form .row {
+  padding-top: 10px; }
+.section .content form label {
+  font-weight: bold;
+  padding-right: 10px; }
 
 #changes table thead th {
   font-size: 0.9em;
@@ -49,24 +61,24 @@
   background: #000000;
   color: #ffffff; }
 
-/*#websync-admin-menu {*/
-/*  position: fixed;*/
-/*  top:0px;*/
-/*  right: 10px;*/
-/*  list-style: none;*/
-/*  padding: 10px;*/
-/*  background: black;*/
-/*}*/
-/*#websync-admin-menu a {*/
-/*  color: white;*/
-/*  text-decoration: none;*/
-/*}*/
-/*#websync-admin-menu a:hover {*/
-/*  color: red;*/
-/*}*/
-/*#websync-admin-menu li {*/
-/*  display: inline;*/
-/*  padding: 5px;*/
-/*}*/
+#websync-admin-menu {
+  position: fixed;
+  top:0px;
+  right: 10px;
+  list-style: none;
+  padding: 10px;
+  background: black;
+}
+#websync-admin-menu a {
+  color: white;
+  text-decoration: none;
+}
+#websync-admin-menu a:hover {
+  color: red;
+}
+#websync-admin-menu li {
+  display: inline;
+  padding: 5px;
+}
 
 

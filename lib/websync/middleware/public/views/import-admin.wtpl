@@ -1,4 +1,4 @@
-<div class="section container">
+<div id="importing" class="section container">
   <div class="header row">
     <button class="btn primary span4" id="import-show-button" ?{!model.may_sync_local?}{disabled}>Download new version</button>
     ?{model.may_sync_local?}{
@@ -7,14 +7,13 @@
       <h3 class="span12 explain neutral">Nothing new in here...</h3>
     }
   </div>
-  <div id="import-content" class="content">
+  <div class="content">
     <<+{commits.wtpl with commits: model.available_bug_fixes}
   </div>
   <script>
     $(document).ready(function(){
-      //$("#import-show-button").button();
       $("#import-show-button").click(function() {
-        websync.ui.toggleContent("#import-content");
+        websync.ui.toggleContent("importing");
         return false;
       });
     });
