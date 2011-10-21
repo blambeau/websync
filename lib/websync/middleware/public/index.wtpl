@@ -23,7 +23,7 @@
         <div class="container"> 
           <span class="brand">WebSync</span> 
           <ul class="nav"> 
-            <li><a href="/">~&gt; Local Web Site</a></li> 
+            <li><a id="local-website-link" href="/">~&gt; Local Web Site</a></li> 
             <li class="active"><a href="#">Changes</a></li> 
           </ul> 
         </div> 

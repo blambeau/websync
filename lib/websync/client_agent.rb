@@ -137,7 +137,6 @@ module WebSync
         false
       end
     end
-    upon(:user, :sync_repo_requested){ sync_repo }
 
   end # class ClientAgent
 end # end WebSync

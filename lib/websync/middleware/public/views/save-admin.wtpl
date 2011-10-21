@@ -3,7 +3,7 @@
     <div class="row">
       <button class="btn primary span4" id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
       ?{model.may_save?}{
-        <h3 class="span12 explain ok">Your local version presents the changes below. You may save them at any time!</h3>
+        <h3 class="span12 explain ok">The changes below can be saved at any time!</h3>
       }{
         <h3 class="span12 explain neutral">Nothing to save for now.</h3>
       }

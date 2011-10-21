@@ -28,6 +28,11 @@ module WebSync
 
     ############################################################## Post actions
 
+    post '/user-request/import' do
+      settings.agent.signal(:"import-request", params)
+      true
+    end
+
     post '/user-request/save' do
       settings.agent.signal(:"save-request", params)
       true
