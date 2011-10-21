@@ -1,5 +1,5 @@
 #changes {
-  margin-top: 50px; }
+  margin-top: 60px; }
 
 #say {
   text-align: center;
@@ -54,9 +54,6 @@
   text-align: left; }
 #changes table tbody tr:hover td, tr:hover td a, tr.odd:hover td, tr.odd:hover td a {
   background: #800000;
-  color: #ffffff; }
-#changes table tbody tr.odd:hover td, tr.odd:hover td a{
-  background: #000000;
   color: #ffffff; }
 
 #websync-admin-menu {

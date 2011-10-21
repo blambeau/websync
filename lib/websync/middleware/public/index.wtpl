@@ -11,10 +11,7 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script>
-      $(document).ready(function() {
-        websync.start('');
-        websync.ui.refresh("changes");
-      });
+      $(document).ready(function() { websync.start('', true); });
     </script>
   </head>
   <body>
@@ -22,6 +19,7 @@
       <a class="close" href="#">×</a>
       <p></p>
     </div>
-    <div id="changes"></div>
+    <div id="changes">
+    </div>
   </body>
 </html>
