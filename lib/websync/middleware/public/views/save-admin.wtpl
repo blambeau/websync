@@ -10,6 +10,20 @@
     </div>
   </div>
   <div class="content">
+    <form id="save-form">
+      <div class="row">
+        <label class="span4" for="summary">Summary</label>
+        <input class="span12" type="text" name="summary" value=""/>
+      </div>
+      <div class="row">
+        <label class="span4" for="description">Description</label>
+        <textarea class="span12" rows="8"></textarea>
+      </div>
+      <div class="row">
+        <p id="save-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
+        <button class="btn success offset12 span4" id="save-req-button">Save!</button>
+      </div>
+    </form>
     <div class="row">
       <div class="span16">
       ?{!model.to_be_updated.empty?}{
@@ -26,20 +40,6 @@
       }
       </div>
     </div>
-    <form id="save-form">
-      <div class="row">
-        <label class="span4" for="summary">Summary</label>
-        <input class="span12" type="text" name="summary" value=""/>
-      </div>
-      <div class="row">
-        <label class="span4" for="description">Description</label>
-        <textarea class="span12" rows="8"></textarea>
-      </div>
-      <div class="row">
-        <p id="save-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
-        <button class="btn success offset12 span4" id="save-req-button">Save!</button>
-      </div>
-    </form>
   </div>
   <script>
     $(document).ready(function(){
@@ -50,9 +50,10 @@
       $("#save-req-button").click(function() {
         $("#save-ajax-loader, #save-req-button").toggle();
         websync.save($("#save-form").serialize(), function(fdbk) {
+          $("#save-ajax-loader, #save-req-button").toggle();
           websync.ui.say({message: fdbk.message,
                           msgType: fdbk.result});
-          websync.ui.refresh("changes");
+          if (fdbk.result != "warning") { websync.ui.refresh("changes"); }
         });
         return false;
       });

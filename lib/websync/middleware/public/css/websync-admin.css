@@ -1,5 +1,5 @@
 #changes {
-  margin-top: 80px; }
+  margin-top: 50px; }
 
 #say {
   text-align: center;
@@ -16,8 +16,7 @@
   line-height: normal; 
   display: none;}
 .section {
-  padding-top: 10px;
-  margin-bottom: 20px; }
+  padding-top: 10px; }
 .section h3 {
   line-height: 28px; }
 .section .neutral {

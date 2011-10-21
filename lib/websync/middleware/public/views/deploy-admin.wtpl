@@ -31,9 +31,10 @@
       $("#deploy-req-button").click(function() {
         $("#deploy-ajax-loader, #deploy-req-button").toggle();
         websync.deploy(function(fdbk) {
+          $("#deploy-ajax-loader, #deploy-req-button").toggle();
           websync.ui.say({message: fdbk.message,
                           msgType: fdbk.result});
-          websync.ui.refresh("changes");
+          if (fdbk.result != "warning") { websync.ui.refresh("changes"); }
         });
         return false;
       });

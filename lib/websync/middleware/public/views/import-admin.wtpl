@@ -48,9 +48,10 @@
       $("#import-req-button").click(function() {
         $("#import-ajax-loader, #import-req-button").toggle();
         websync.import(function(fdbk) {
+          $("#import-ajax-loader, #import-req-button").toggle();
           websync.ui.say({message: fdbk.message,
                           msgType: fdbk.result});
-          websync.ui.refresh("changes");
+          if (fdbk.result != "warning") { websync.ui.refresh("changes"); }
         });
         return false;
       });

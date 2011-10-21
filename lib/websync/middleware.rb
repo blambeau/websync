@@ -15,6 +15,8 @@ module WebSync
     ############################################################## Configuration
     # Serve public pages from public
     set :public_folder, PUBLIC
+    disable :raise_errors
+    disable :show_exceptions
 
     ############################################################## Get routes
 
@@ -34,7 +36,16 @@ module WebSync
     end
 
     post '/user-request/save' do
-      settings.agent.signal(:"save-request", params)
+      # clean arguments
+      summary = (params["summary"] || "").strip
+      description = (params["description"] || "").strip
+
+      # check them
+      raise ValidationError, "Summary is mandatory" if summary.empty?
+
+      # send message
+      message = summary + "\n\n" + description + "\n"
+      settings.agent.signal(:"save-request", {"message" => message})
       true
     end
 
@@ -47,7 +58,13 @@ module WebSync
 
     # error handling
     error do
-      'Sorry, an error occurred'
+      content_type "text/plain"
+      case err = env['sinatra.error']
+      when WebSync::ValidationError
+        [400, {"Content-type" => "text/plain"}, err.message]
+      else
+        [500, {}, ["Sorry, an unexpected error occured: #{err.message}"]]
+      end
     end
 
     ############################################################## Helpers

@@ -19,10 +19,18 @@ module WebSync
 
     let(:signals){ [] }
 
+    specify "save without summary" do
+      post '/user-request/save', {}
+      last_response.should_not be_ok
+      last_response.status.should eq(400)
+      last_response.body.should eq("Summary is mandatory")
+    end
+
     specify "save" do
-      post '/user-request/save', {"message" => "Commit message"}
+      post '/user-request/save', {"summary" => "Summary", 
+                                  "description" => "* Description 1\n* Description 2"}
       last_response.should be_ok
-      signals.should eq([[:"save-request", {"message" => "Commit message"}]])
+      signals.should eq([[:"save-request", {"message" => "Summary\n\n* Description 1\n* Description 2\n"}]])
     end
 
     specify "deploy" do
