@@ -1,14 +1,42 @@
 <div id="importing" class="section container">
-  <div class="header row">
-    <button class="btn primary span4" id="import-show-button" ?{!model.may_sync_local?}{disabled}>Download new version</button>
-    ?{model.may_sync_local?}{
-      <h3 class="span12 explain ok">A new version is available! Click to download.</h3>
-    }{
-      <h3 class="span12 explain neutral">Nothing new in here...</h3>
-    }
+  <div class="header">
+    <div class="row">
+      <button class="btn primary span4" id="import-show-button" ?{!model.may_sync_local?}{disabled}>Download new version</button>
+      ?{model.may_sync_local?}{
+        <h3 class="span12 explain ok">A new version is available! Click to download.</h3>
+      }{
+        <h3 class="span12 explain neutral">Nothing new in here...</h3>
+      }
+    </div>
   </div>
   <div class="content">
-    <<+{commits.wtpl with commits: model.available_bug_fixes}
+    <div class="row">
+      <div class="span16">
+      ?{!model.to_be_updated.empty?}{
+        <h4>Files modified (will be updated on the production website)</h4>
+        <<+{changes_table.wtpl with changes: model.to_be_updated}
+      }
+      ?{!model.to_be_added.empty?}{
+        <h4>New files (will be added to the production website)</h4>
+        <<+{changes_table.wtpl with changes: model.to_be_added}
+      }
+      ?{!model.to_be_removed.empty?}{
+        <h4>Missing files (will be removed from the production website)</h4>
+        <<+{changes_table.wtpl with changes: model.to_be_removed}
+      }
+      </div>
+    </div>
+    <div class="row">
+      <div class="span16">
+        <<+{commits.wtpl with commits: model.available_bug_fixes}
+      </div>
+    </div>
+    <div class="row">
+      <form>
+        <p id="import-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
+        <button class="btn success offset12 span4" id="import-req-button">Import!</button>
+      </form>
+    </div>
   </div>
   <script>
     $(document).ready(function(){

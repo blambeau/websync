@@ -17,7 +17,6 @@
   display: none;}
 .section {
   padding-top: 10px;
-  /* border-top: 1px dashed #222222; */
   margin-bottom: 20px; }
 .section h3 {
   line-height: 28px; }
@@ -31,13 +30,13 @@
   padding-top: 20px;
   display: none; }
 
-.section .content form {
-  padding: 0px; margin: 0px; }
 .section .content form .row {
   padding-top: 10px; }
 .section .content form label {
   font-weight: bold;
-  padding-right: 10px; }
+  padding: 0px 6px; }
+.section .content form input, 
+.section .content form textarea {}
 
 #changes table thead th {
   font-size: 0.9em;

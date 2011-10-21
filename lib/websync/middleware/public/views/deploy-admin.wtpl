@@ -1,18 +1,26 @@
 <div id="deploying" class="section container">
-  <div class="header row">
-    <button class="btn primary span4" id="deploy-show-button" ?{!model.may_sync_repo?}{disabled}>Deploy to production</button>
-    ?{model.may_sync_repo?}{
-      <h3 class="span12 explain ok">Your production website may now be updated!</h3>
-    }{
-      <h3 class="span12 explain neutral">${model.explain_no_deploy}</h3>
-    }
+  <div class="header">
+    <div class="row">
+      <button class="btn primary span4" id="deploy-show-button" ?{!model.may_sync_repo?}{disabled}>Deploy to production</button>
+      ?{model.may_sync_repo?}{
+        <h3 class="span12 explain ok">Your production website may now be updated!</h3>
+      }{
+        <h3 class="span12 explain neutral">${model.explain_no_deploy}</h3>
+      }
+    </div>
   </div>
   <div class="content">
-    <<+{commits.wtpl with commits: model.unpushed_commits}
-    <form class="row">
-      <p id="deploy-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
-      <button class="btn success offset12 span4" id="deploy-req-button">Deploy!</button>
-    </form>
+    <div class="row">
+      <div class="span16">
+        <<+{commits.wtpl with commits: model.unpushed_commits}
+      </div>
+    </div>
+    <div class="row">
+      <form>
+        <p id="deploy-ajax-loader" class="ajax-loader offset12 span4"><img src="css/images/ajax-loader.gif"></p>
+        <button class="btn success offset12 span4" id="deploy-req-button">Deploy!</button>
+      </form>
+    </div>
   </div>
   <script>
     $(document).ready(function(){

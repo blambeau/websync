@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>WebSync - Administration</title>
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <script src="js/jquery-1.6.4.min.js"></script>
     <script src="js/jquery.scrollTo-1.4.2-min.js"></script>
     <script src="js/websync-admin.js"></script>
@@ -33,8 +33,6 @@
       <a class="close" href="#">×</a>
       <p></p>
     </div>
-    <div class="container">
-      <div id="changes"></div>
-    </div>
+    <div id="changes"></div>
   </body>
 </html>

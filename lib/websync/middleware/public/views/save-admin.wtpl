@@ -1,25 +1,31 @@
 <div id="saving" class="section container">
-  <div class="header row">
-    <button class="btn primary span4" id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
-    ?{model.may_save?}{
-      <h3 class="span12 explain ok">Your local version presents the changes below. You may save them at any time!</h3>
-    }{
-      <h3 class="span12 explain neutral">Nothing to save for now.</h3>
-    }
+  <div class="header">
+    <div class="row">
+      <button class="btn primary span4" id="save-show-button" ?{!model.may_save?}{disabled}>Save local changes</button>
+      ?{model.may_save?}{
+        <h3 class="span12 explain ok">Your local version presents the changes below. You may save them at any time!</h3>
+      }{
+        <h3 class="span12 explain neutral">Nothing to save for now.</h3>
+      }
+    </div>
   </div>
   <div class="content">
-    ?{!model.to_be_updated.empty?}{
-      <h4>Files modified (will be updated on the production website)</h4>
-      <<+{changes_table.wtpl with changes: model.to_be_updated}
-    }
-    ?{!model.to_be_added.empty?}{
-      <h4>New files (will be added to the production website)</h4>
-      <<+{changes_table.wtpl with changes: model.to_be_added}
-    }
-    ?{!model.to_be_removed.empty?}{
-      <h4>Missing files (will be removed from the production website)</h4>
-      <<+{changes_table.wtpl with changes: model.to_be_removed}
-    }
+    <div class="row">
+      <div class="span16">
+      ?{!model.to_be_updated.empty?}{
+        <h4>Files modified (will be updated on the production website)</h4>
+        <<+{changes_table.wtpl with changes: model.to_be_updated}
+      }
+      ?{!model.to_be_added.empty?}{
+        <h4>New files (will be added to the production website)</h4>
+        <<+{changes_table.wtpl with changes: model.to_be_added}
+      }
+      ?{!model.to_be_removed.empty?}{
+        <h4>Missing files (will be removed from the production website)</h4>
+        <<+{changes_table.wtpl with changes: model.to_be_removed}
+      }
+      </div>
+    </div>
     <form id="save-form">
       <div class="row">
         <label class="span4" for="summary">Summary</label>
