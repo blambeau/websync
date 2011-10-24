@@ -80,7 +80,7 @@ module WebSync
         end
       end
 
-      GIT_OPTS = {:raise => true}
+      GIT_OPTS = {:raise => true, :timeout => false}
 
       def update_info
         git.remote(git_opts.merge(:raise => false), "update")
