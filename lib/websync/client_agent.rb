@@ -11,6 +11,10 @@ module WebSync
 
     ############################################################ State Variables
 
+    def refresh
+      working_dir.update_info
+    end
+
     # Is there pending changes on the working copy?
     def pending_changes?
       working_dir.has_pending_changes?

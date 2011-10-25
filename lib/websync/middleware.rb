@@ -21,6 +21,7 @@ module WebSync
     ############################################################## Get routes
 
     get '/' do
+      settings.agent.refresh
       serve 'index.wtpl'
     end
 
