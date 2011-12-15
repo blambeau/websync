@@ -17,11 +17,11 @@ module WebSync
       let(:repo){ Fixtures.a_modified_clone }
       specify{
         Hash[repo.pending_changes.map{|c|
-          [c.path, c.operation]
+          [c.path, c.type]
         }].should eq({
-          "README.md"  => "remove",
-          "ADDED.md"   => "add",
-          ".gitignore" => "update"
+          "README.md"  => "D",
+          "ADDED.md"   => nil,
+          ".gitignore" => "M"
         })
         repo.should be_dirty
         repo.should_not be_clean

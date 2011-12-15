@@ -22,15 +22,15 @@ module WebSync
       end
 
       def to_be_added
-        pending_changes.select{|c| c.operation == "add"}
+        pending_changes.select{|c| c.untracked || (c.type == 'A')}
       end
 
       def to_be_updated
-        pending_changes.select{|c| c.operation == "update"}
+        pending_changes.select{|c| c.type == 'M'}
       end
 
       def to_be_removed
-        pending_changes.select{|c| c.operation == "remove"}
+        pending_changes.select{|c| c.type == 'D'}
       end
 
       def explain_no_deploy

@@ -3,18 +3,6 @@ module WebSync
   class WorkingDir
     class Git < WorkingDir
 
-      module Change
-        OPERATIONS = {
-          "M" => "update",
-          "A" => "add",
-          "D" => "remove",
-          "C" => "resolve"
-        }
-        def operation
-          untracked ? "add" : OPERATIONS[type]
-        end
-      end
-
       GIT_OPTS = {:raise => true, :timeout => false}
 
       def update_info
@@ -24,14 +12,9 @@ module WebSync
 
       # Returns the list of pending changes on the local copy
       def pending_changes
-        # pending changes are
-        #   <=> either an untracked (but not ignored) or one whose status is not
-        #       nil ('A', 'M', 'D')
-        #   <=> any?{|f| f.untracked && !f.ignored} || any?{|f| !f.type.nil?}
-        #   <=> any?{|f| (f.untracked && !f.ignored) || !f.type.nil? }
         gritrepo.status.select{|f|
-          (f.untracked && !f.ignored) || !f.type.nil?
-        }.map{|f| f.extend(Change)}
+          f.type || (f.untracked && !f.ignored)
+        }
       end
 
       # Returns the list of unpulled bugfixes
