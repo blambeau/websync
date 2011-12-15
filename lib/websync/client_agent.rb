@@ -22,7 +22,7 @@ module WebSync
 
     # Is there bug fixes availables for the working copy?
     def bug_fixes_available?
-      working_dir.has_available_bug_fixes?
+      working_dir.backward?
     end
 
     # Does the local copy have local savings?

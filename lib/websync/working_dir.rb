@@ -56,7 +56,7 @@ module WebSync
     #
     # @return [Boolean] true if such commits exist, false otherwise
     def backward?
-      !unmerged_commits.empty?
+      !unpulled_commits.empty?
     end
 
     # Does the working dir have commits that have not been pushed back to the 

@@ -35,15 +35,10 @@ module WebSync
       end
 
       # Returns the list of unpulled bugfixes
-      def available_bug_fixes
+      def unpulled_commits
         git.rev_list(git_opts, "^master", "origin/master").
             split("\n").
             map{|id| gritrepo.commit(id)}
-      end
-
-      # Is there bug fixes availables for the local copy?
-      def has_available_bug_fixes?
-        not(available_bug_fixes.empty?)
       end
 
       # Returns the list of unpushed commits
@@ -63,7 +58,7 @@ module WebSync
       def in_sync?
         !(dirty? || 
           has_unpushed_commits? || 
-          has_available_bug_fixes?)
+          backward?)
       end
 
       def save(commit_message)

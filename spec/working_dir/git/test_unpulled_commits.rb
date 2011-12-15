@@ -1,14 +1,14 @@
 require 'spec_helper'
 module WebSync
-  describe WorkingDir::Git, "available_bug_fixes" do
+  describe WorkingDir::Git, "unpulled_commits" do
 
-    subject{ repo.available_bug_fixes }
+    subject{ repo.unpulled_commits }
 
     context "on an in-sync repository" do
       let(:repo){ Fixtures.an_in_sync_clone }
       specify {
         subject.should be_empty
-        repo.has_available_bug_fixes?.should be_false
+        repo.should_not be_backward
       }
     end
 
@@ -19,7 +19,7 @@ module WebSync
         subject.map{|c| c.short_message}.should eq([
           "A first bugfix"
         ])
-        repo.has_available_bug_fixes?.should be_true 
+        repo.should be_backward
       }
     end
 

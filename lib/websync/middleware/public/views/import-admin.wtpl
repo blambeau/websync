@@ -28,7 +28,7 @@
     </div>
     <div class="row">
       <div class="span16">
-        <<+{commits.wtpl with commits: model.available_bug_fixes}
+        <<+{commits.wtpl with commits: model.unpulled_commits}
       </div>
     </div>
     <div class="row">

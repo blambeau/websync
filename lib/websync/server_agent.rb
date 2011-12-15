@@ -17,7 +17,7 @@ module WebSync
     # Is the production up to date?
     def production_up_to_date?
       working_dir.update_info
-      not(working_dir.has_available_bug_fixes?)
+      not(working_dir.backward?)
     end
 
     #
