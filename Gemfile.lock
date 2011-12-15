@@ -1,5 +1,12 @@
 GIT
-  remote: https://blambeau@github.com/blambeau/grit.git
+  remote: https://github.com/blambeau/epath.git
+  revision: 892eadc7e8dc6026c2b7704851afed0da14abc28
+  branch: tmp
+  specs:
+    epath (0.0.1)
+
+GIT
+  remote: https://github.com/blambeau/grit.git
   revision: 099fed8c32ffe910836abbabc9a6997de55e5783
   specs:
     grit (2.4.1)
@@ -39,6 +46,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  epath!
   grit!
   http (= 0.0.1)
   rack-test (~> 0.6.1)

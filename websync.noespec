@@ -31,4 +31,5 @@ variables:
     - {name: wlang,        version: "~> 0.10.2", groups: [release      ]}
     - {name: grit,         version: "~> 2.4.1",  groups: [runtime      ]}
     - {name: http,         version: "= 0.0.1",   groups: [runtime      ]}
+    - {name: epath,        version: "= 0.0.1",   groups: [runtime      ]}
 

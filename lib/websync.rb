@@ -1,9 +1,7 @@
 require "websync/version"
 require "fileutils"
 require "grit"
-#
-# End-user oriented website synchronization
-#
+require "epath"
 module WebSync
 end # module WebSync
 require 'websync/errors'

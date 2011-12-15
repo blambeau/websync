@@ -14,7 +14,7 @@ module WebSync
       }
       specify{
         subject.should be_a(WorkingDir)
-        subject.exists?(".gitignore").should be_true
+        (subject/".gitignore").should exist
         subject.in_sync?.should be_true
       }
     end
@@ -33,7 +33,7 @@ module WebSync
         origin.clone(where){|cl| 
           seen = true
           cl.should be_a(WorkingDir)
-          cl.exists?(".gitignore").should be_true
+          (cl/".gitignore").should exist
           cl.in_sync?.should be_true
         }
         seen.should be_true

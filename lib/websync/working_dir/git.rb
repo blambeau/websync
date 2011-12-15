@@ -1,0 +1,120 @@
+require 'grit'
+module WebSync
+  class WorkingDir
+    class Git < WorkingDir
+
+      module Change
+        OPERATIONS = {
+          "M" => "update",
+          "A" => "add",
+          "D" => "remove",
+          "C" => "resolve"
+        }
+        def operation
+          untracked ? "add" : OPERATIONS[type]
+        end
+      end
+
+      GIT_OPTS = {:raise => true, :timeout => false}
+
+      def update_info
+        git.remote(git_opts.merge(:raise => false), "update")
+      end
+
+      # Returns the list of pending changes on the local copy
+      def pending_changes
+        # pending changes are
+        #   <=> either an untracked (but not ignored) or one whose status is not
+        #       nil ('A', 'M', 'D')
+        #   <=> any?{|f| f.untracked && !f.ignored} || any?{|f| !f.type.nil?}
+        #   <=> any?{|f| (f.untracked && !f.ignored) || !f.type.nil? }
+        gritrepo.status.select{|f|
+          (f.untracked && !f.ignored) || !f.type.nil?
+        }.map{|f| f.extend(Change)}
+      end
+
+      # Is there pending changes on the local copy?
+      def has_pending_changes?
+        not(pending_changes.empty?)
+      end
+
+      # Returns the list of unpulled bugfixes
+      def available_bug_fixes
+        git.rev_list(git_opts, "^master", "origin/master").
+            split("\n").
+            map{|id| gritrepo.commit(id)}
+      end
+
+      # Is there bug fixes availables for the local copy?
+      def has_available_bug_fixes?
+        not(available_bug_fixes.empty?)
+      end
+
+      # Returns the list of unpushed commits
+      def unpushed_commits
+        git.rev_list(git_opts, "master", "^origin/master").
+            split("\n").
+            map{|id| gritrepo.commit(id)}
+      end
+
+      # Does the local copy have unpushed commits?
+      def has_unpushed_commits?
+        not(unpushed_commits.empty?)
+      end
+
+      # Returns true if this working directory is purely in sync 
+      # with the origin repository
+      def in_sync?
+        !(has_pending_changes? || 
+          has_unpushed_commits? || 
+          has_available_bug_fixes?)
+      end
+
+      def save(commit_message)
+        to_be_added = pending_changes.select{|f|
+          f.untracked && f.type.nil?
+        }
+        git.add(git_opts, *to_be_added.map{|f| f.path})
+        git.commit(git_opts(), '-a', '-m', commit_message)
+      end
+
+      def push_origin
+        git.push(git_opts, "origin")
+      end
+
+      def save_and_push(commit_message)
+        save(commit_message) 
+        push_origin
+      end
+
+      def tag(tag_name)
+        git.tag(git_opts, tag_name)
+        git.push(git_opts, "origin", tag_name)
+      end
+
+      def reset(tag_name)
+        git.reset(git_opts(:hard => true), tag_name)
+      end
+
+      def rebase
+        update_info
+        git.rebase(git_opts, "origin/master")
+      end
+
+      private 
+
+      def gritrepo
+        @gritrepo ||= Grit::Repo.new(path.to_s)
+      end
+
+      def git
+        gritrepo.git
+      end
+
+      def git_opts(opts = {})
+        GIT_OPTS.merge(:chdir => path.to_s).merge(opts)
+      end
+
+    end # class Git
+  end # class WorkingDir
+end # module WebSync

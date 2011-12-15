@@ -18,13 +18,13 @@ module WebSync
     }
 
     specify("it should have expected files") {
-      subject.exists?(".gitignore").should be_true
-      subject.exists?("README.md").should be_true
-      subject.exists?("ignored.txt").should be_false
+      (subject/".gitignore").should exist
+      (subject/"README.md").should exist
+      (subject/"ignored.txt").should_not exist
     }
 
     specify("files should have expected content") {
-      subject.f_read(".gitignore").should eq("ignored.txt\ntmp\n")
+      (subject/".gitignore").read.should eq("ignored.txt\ntmp\n")
     }
 
   end
