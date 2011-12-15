@@ -53,22 +53,26 @@ module WebSync
 
       ########################################################### Git operations
 
+      # Updates local information about the remotes (including origin)
       def update_info
         git.remote(git_opts.merge(:raise => false), "update")
         self
       end
 
+      # Creates a tag named `tag_name` and pushes it at the origin
       def tag(tag_name)
         git.tag(git_opts, tag_name)
         push("origin", tag_name)
         self
       end
 
+      # Resets the current repository to a given tag name
       def reset(tag_name)
         git.reset(git_opts(:hard => true), tag_name)
         self
       end
 
+      # Rebase the working dir somewhere ("origin/master" by default)
       def rebase(*args)
         args = ["origin/master"] if args.empty?
         git.rebase(git_opts, *args)
