@@ -71,7 +71,7 @@ module WebSync
     #
     # @return [Boolean] true iif (clean? and !backward and !forward)
     def synchronized?
-      (clean? and !backward and !forward)
+      !(dirty? or backward? or forward?)
     end
 
     ################################################################## Operation

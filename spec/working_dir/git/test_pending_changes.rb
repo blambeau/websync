@@ -8,7 +8,8 @@ module WebSync
       let(:repo){ Fixtures.an_in_sync_clone }
       specify {
         subject.should be_empty
-        repo.has_pending_changes?.should be_false
+        repo.should be_clean
+        repo.should_not be_dirty
       }
     end
 
@@ -22,7 +23,8 @@ module WebSync
           "ADDED.md"   => "add",
           ".gitignore" => "update"
         })
-        repo.has_pending_changes?.should be_true
+        repo.should be_dirty
+        repo.should_not be_clean
       }
     end
 

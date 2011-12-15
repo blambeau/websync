@@ -11,7 +11,7 @@ module WebSync
 
     # Is there pending changes on the working copy?
     def pending_changes?
-      working_dir.has_pending_changes?
+      working_dir.dirty?
     end
 
     # Is the production up to date?

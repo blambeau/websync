@@ -34,11 +34,6 @@ module WebSync
         }.map{|f| f.extend(Change)}
       end
 
-      # Is there pending changes on the local copy?
-      def has_pending_changes?
-        not(pending_changes.empty?)
-      end
-
       # Returns the list of unpulled bugfixes
       def available_bug_fixes
         git.rev_list(git_opts, "^master", "origin/master").
@@ -66,7 +61,7 @@ module WebSync
       # Returns true if this working directory is purely in sync 
       # with the origin repository
       def in_sync?
-        !(has_pending_changes? || 
+        !(dirty? || 
           has_unpushed_commits? || 
           has_available_bug_fixes?)
       end
