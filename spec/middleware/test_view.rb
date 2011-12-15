@@ -15,8 +15,8 @@ module WebSync
       last_response.should be_ok
     }
 
-    context " / on an in sync working dir / " do
-      let(:wdir){ Fixtures.an_in_sync_clone }
+    context " / on a synchronized working dir / " do
+      let(:wdir){ Fixtures.a_synchronized_clone }
 
       specify "import-admin" do
         get '/view/import-admin'

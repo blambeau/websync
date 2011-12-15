@@ -32,12 +32,12 @@ module WebSync
       end
     end
 
-    def an_in_sync_clone 
-      @an_in_sync_clone ||= an_in_sync_clone!
+    def a_synchronized_clone 
+      @a_synchronized_clone ||= a_synchronized_clone!
     end
 
-    def an_in_sync_clone!
-      the_bare_repository.clone(tmpdir("in_sync_clone"))
+    def a_synchronized_clone!
+      the_bare_repository.clone(tmpdir("a_synchronized_clone"))
     end
 
     def a_modified_clone

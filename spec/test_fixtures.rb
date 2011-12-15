@@ -11,7 +11,7 @@ module WebSync
   end
 
   describe Fixtures, "an in-sync clone" do
-    subject{ Fixtures.an_in_sync_clone }
+    subject{ Fixtures.a_synchronized_clone }
 
     it {
       should be_kind_of(WorkingDir)

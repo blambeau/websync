@@ -48,12 +48,6 @@ module WebSync
             map{|id| gritrepo.commit(id)}
       end
 
-      # Returns true if this working directory is purely in sync 
-      # with the origin repository
-      def in_sync?
-        !(dirty? || forward? || backward?)
-      end
-
       def save(commit_message)
         to_be_added = pending_changes.select{|f|
           f.untracked && f.type.nil?

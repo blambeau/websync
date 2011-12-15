@@ -5,8 +5,8 @@ module WebSync
     let(:agent){ ServerAgent.new(wdir) }
     subject{ agent.production_up_to_date? }
 
-    context "on a in-sync working dir" do
-      let(:wdir){ Fixtures.an_in_sync_clone }
+    context "on a synchronized working dir" do
+      let(:wdir){ Fixtures.a_synchronized_clone }
       it {
         should be_true
       }

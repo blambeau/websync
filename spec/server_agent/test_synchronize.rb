@@ -7,8 +7,8 @@ module WebSync
     let(:events){ [] }
     before{ agent.listen{|ag,evt| events << [ag, evt]} }
 
-    context "on an in-sync working dir" do
-      let(:wdir){ Fixtures.an_in_sync_clone }
+    context "on a synchronized working dir" do
+      let(:wdir){ Fixtures.a_synchronized_clone }
       specify {
         agent.synchronize.should be_false
       }

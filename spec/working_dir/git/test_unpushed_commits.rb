@@ -4,8 +4,8 @@ module WebSync
 
     subject{ repo.unpushed_commits }
 
-    context "on an in-sync working dir" do
-      let(:repo){ Fixtures.an_in_sync_clone }
+    context "on a synchronized working dir" do
+      let(:repo){ Fixtures.a_synchronized_clone }
       specify {
         subject.should be_empty
         repo.should_not be_forward

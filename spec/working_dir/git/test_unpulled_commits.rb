@@ -4,8 +4,8 @@ module WebSync
 
     subject{ repo.unpulled_commits }
 
-    context "on an in-sync repository" do
-      let(:repo){ Fixtures.an_in_sync_clone }
+    context "on an synchronized repository" do
+      let(:repo){ Fixtures.a_synchronized_clone }
       specify {
         subject.should be_empty
         repo.should_not be_backward

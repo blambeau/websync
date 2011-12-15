@@ -15,7 +15,7 @@ module WebSync
       specify{
         subject.should be_a(WorkingDir)
         (subject/".gitignore").should exist
-        subject.in_sync?.should be_true
+        subject.should be_synchronized
       }
     end
 
@@ -34,7 +34,7 @@ module WebSync
           seen = true
           cl.should be_a(WorkingDir)
           (cl/".gitignore").should exist
-          cl.in_sync?.should be_true
+          cl.should be_synchronized
         }
         seen.should be_true
       end

@@ -5,8 +5,8 @@ module WebSync
     let(:agent){ ClientAgent.new(wdir) }
     subject{ agent.pending_changes? }
 
-    context "on a in-sync working dir" do
-      let(:wdir){ Fixtures.an_in_sync_clone }
+    context "on a synchronized working dir" do
+      let(:wdir){ Fixtures.a_synchronized_clone }
       it {
         should be_false
       }

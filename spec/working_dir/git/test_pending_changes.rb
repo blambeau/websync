@@ -5,7 +5,7 @@ module WebSync
     subject{ repo.pending_changes }
 
     context "on a clean working dir" do
-      let(:repo){ Fixtures.an_in_sync_clone }
+      let(:repo){ Fixtures.a_synchronized_clone }
       specify {
         subject.should be_empty
         repo.should be_clean
