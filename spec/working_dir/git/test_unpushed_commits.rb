@@ -8,7 +8,7 @@ module WebSync
       let(:repo){ Fixtures.an_in_sync_clone }
       specify {
         subject.should be_empty
-        repo.has_unpushed_commits?.should be_false
+        repo.should_not be_forward
       }
     end
 
@@ -19,7 +19,7 @@ module WebSync
         subject.map{|c| c.short_message}.should eq([
           "And even more"
         ])
-        repo.has_unpushed_commits?.should be_true
+        repo.should be_forward
       }
     end
 

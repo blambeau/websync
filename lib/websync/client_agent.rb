@@ -27,7 +27,7 @@ module WebSync
 
     # Does the local copy have local savings?
     def unpushed_commits?
-      working_dir.has_unpushed_commits?
+      working_dir.forward?
     end
 
     ############################################################ Operations

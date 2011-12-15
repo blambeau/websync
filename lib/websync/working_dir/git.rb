@@ -48,17 +48,10 @@ module WebSync
             map{|id| gritrepo.commit(id)}
       end
 
-      # Does the local copy have unpushed commits?
-      def has_unpushed_commits?
-        not(unpushed_commits.empty?)
-      end
-
       # Returns true if this working directory is purely in sync 
       # with the origin repository
       def in_sync?
-        !(dirty? || 
-          has_unpushed_commits? || 
-          backward?)
+        !(dirty? || forward? || backward?)
       end
 
       def save(commit_message)
