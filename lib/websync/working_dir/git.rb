@@ -19,6 +19,7 @@ module WebSync
 
       def update_info
         git.remote(git_opts.merge(:raise => false), "update")
+        self
       end
 
       # Returns the list of pending changes on the local copy
@@ -76,29 +77,30 @@ module WebSync
         }
         git.add(git_opts, *to_be_added.map{|f| f.path})
         git.commit(git_opts(), '-a', '-m', commit_message)
+        self
       end
 
-      def push_origin
-        git.push(git_opts, "origin")
-      end
-
-      def save_and_push(commit_message)
-        save(commit_message) 
-        push_origin
+      def push(*args)
+        args = ["origin"] if args.empty?
+        git.push(git_opts, *args)
+        self
       end
 
       def tag(tag_name)
         git.tag(git_opts, tag_name)
-        git.push(git_opts, "origin", tag_name)
+        push("origin", tag_name)
+        self
       end
 
       def reset(tag_name)
         git.reset(git_opts(:hard => true), tag_name)
+        self
       end
 
       def rebase
         update_info
         git.rebase(git_opts, "origin/master")
+        self
       end
 
       private 

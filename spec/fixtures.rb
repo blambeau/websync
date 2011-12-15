@@ -18,15 +18,15 @@ module WebSync
           (cl/"README.md").write   "Hey hey hey, this is the project!\n"
           (cl/"ignored.txt").write "This is an ignored file\n"
           (cl/".gitignore").write  "ignored.txt\ntmp\n"
-          cl.save_and_push("A first commit")
+          cl.save("A first commit").push
 
           (cl/"index.html").write "Hello World!"
-          cl.save_and_push("A first website version")
+          cl.save("A first website version").push
           cl.tag("v1.0.0")
 
           (cl/"index.html").write "Hello World!!"
           (cl/"htaccess").write "something"
-          cl.save_and_push("A first bugfix")
+          cl.save("A first bugfix").push
         end
         repo
       end

@@ -132,7 +132,7 @@ module WebSync
         raise Error, "Unable to syncrhonize the repository; import bug fixes first."
       }
       if unpushed_commits?
-        working_dir.push_origin
+        working_dir.push
         dom_post!(:sync_repo, :pending_changes?, false)
         dom_post!(:sync_repo, :bug_fixes_available?, false)
         signal(:repository_synchronized)
