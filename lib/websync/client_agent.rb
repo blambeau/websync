@@ -126,10 +126,10 @@ module WebSync
     #
     def sync_repo
       req_pre!(:sync_repo, :pending_changes?, false) {
-        raise Error, "Unable to syncrhonize the repository; save pending changes first."
+        raise Error, "Unable to synchronize the repository; save pending changes first."
       }
       req_pre!(:sync_repo, :bug_fixes_available?, false) {
-        raise Error, "Unable to syncrhonize the repository; import bug fixes first."
+        raise Error, "Unable to synchronize the repository; import bug fixes first."
       }
       if unpushed_commits?
         working_dir.push
