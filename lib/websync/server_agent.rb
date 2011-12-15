@@ -39,7 +39,7 @@ module WebSync
       if production_up_to_date?
         false
       else
-        working_dir.rebase
+        working_dir.pull
         dom_post!(:synchronize, :production_up_to_date?, true)
         signal(:production_up_to_date)
         true

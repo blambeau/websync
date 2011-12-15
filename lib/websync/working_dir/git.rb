@@ -3,46 +3,58 @@ module WebSync
   class WorkingDir
     class Git < WorkingDir
 
-      GIT_OPTS = {:raise => true, :timeout => false}
+      #################################################################### Model
 
-      def update_info
-        git.remote(git_opts.merge(:raise => false), "update")
-        self
-      end
-
-      # Returns the list of pending changes on the local copy
+      # (see WorkingDir#pending_changes)
       def pending_changes
         gritrepo.status.select{|f|
           f.type || (f.untracked && !f.ignored)
         }
       end
 
-      # Returns the list of unpulled bugfixes
+      # (see WorkingDir#unpulled_commits)
       def unpulled_commits
         git.rev_list(git_opts, "^master", "origin/master").
             split("\n").
             map{|id| gritrepo.commit(id)}
       end
 
-      # Returns the list of unpushed commits
+      # (see WorkingDir#unpushed_commits)
       def unpushed_commits
         git.rev_list(git_opts, "master", "^origin/master").
             split("\n").
             map{|id| gritrepo.commit(id)}
       end
 
-      def save(commit_message)
+      #################################################### High-level operations
+
+      # (see WorkingDir#save)
+      def save(message)
         to_be_added = pending_changes.select{|f|
           f.untracked && f.type.nil?
         }
         git.add(git_opts, *to_be_added.map{|f| f.path})
-        git.commit(git_opts(), '-a', '-m', commit_message)
+        git.commit(git_opts(), '-a', '-m', message)
         self
       end
 
+      # (see WorkingDir#push)
       def push(*args)
         args = ["origin"] if args.empty?
         git.push(git_opts, *args)
+        self
+      end
+
+      # (see WorkingDir#pull)
+      def pull(*args)
+        rebase(*args)
+        self
+      end
+
+      ########################################################### Git operations
+
+      def update_info
+        git.remote(git_opts.merge(:raise => false), "update")
         self
       end
 
@@ -57,13 +69,15 @@ module WebSync
         self
       end
 
-      def rebase
-        update_info
-        git.rebase(git_opts, "origin/master")
+      def rebase(*args)
+        args = ["origin/master"] if args.empty?
+        git.rebase(git_opts, *args)
         self
       end
 
       private 
+
+      GIT_OPTS = {:raise => true, :timeout => false}
 
       def gritrepo
         @gritrepo ||= Grit::Repo.new(path.to_s)

@@ -60,7 +60,7 @@ module WebSync
         raise Error, "Unable to synchronize a dirty working dir (save first)"
       }
       if bug_fixes_available?
-        working_dir.rebase
+        working_dir.pull
         dom_post!(:sync_local, :bug_fixes_available?, false)
         signal(:working_dir_synchronized)
         true
