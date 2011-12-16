@@ -1,10 +1,11 @@
-<div class="topbar">
+<div id="topbar" class="topbar">
   <div class="fill">
     <div class="container">
-      <span class="brand">WebSync</span>
+      <a href="#" class="brand">WebSync</a>
       <ul class="nav">
-        <li><a id="local-website-link"  href="#">~&gt; Local Web Site</a></li>
-        <li><a id="websync-admin-link" href="#">~&gt; Changes</a></li>
+        <li><a href="/">~&gt; Local Web Site</a></li>
+        <li><a href="search-and-replace">~&gt; Search &amp; Replace</a></li>
+        <li><a href="save-and-deploy">~&gt; Save &amp; Deploy</a></li>
       </ul>
     </div>
   </div>

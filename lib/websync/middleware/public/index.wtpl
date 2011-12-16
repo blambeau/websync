@@ -19,7 +19,7 @@
       <a class="close" href="#">×</a>
       <p></p>
     </div>
-    <div id="changes">
+    <div id="main">
     </div>
   </body>
 </html>

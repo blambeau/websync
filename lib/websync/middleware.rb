@@ -21,7 +21,7 @@ module WebSync
     ############################################################## Get routes
 
     get '/' do
-      settings.agent.refresh
+      #settings.agent.refresh
       serve 'index.wtpl'
     end
 
@@ -62,9 +62,14 @@ module WebSync
       content_type "text/plain"
       case err = env['sinatra.error']
       when WebSync::ValidationError
-        [400, {"Content-type" => "text/plain"}, err.message]
+        [ 400, 
+          {"Content-type" => "text/plain"}, 
+          [ err.message ] ]
       else
-        [500, {}, ["Sorry, an unexpected error occured: #{err.message}"]]
+        [ 500, 
+          {"Content-type" => "text/plain"}, 
+          ["Sorry, an unexpected error occured: #{err.message}\n" + 
+           err.backtrace.join("\n")] ]
       end
     end
 

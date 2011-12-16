@@ -1,5 +1,8 @@
-#changes {
+#main {
   margin-top: 60px; }
+#main ul {
+  padding-left: 10px;
+  padding-top: 10px; }
 
 #say {
   text-align: center;
@@ -37,22 +40,25 @@
 .section .content form input, 
 .section .content form textarea {}
 
-#changes table thead th {
+#save-and-deploy table thead th {
   font-size: 0.9em;
   font-family: Arial;
   font-weight: bold;
   padding: 2px 7px;
   margin: 20px 0px 0px;
   text-align: left; }
-#changes table thead th.actions {
+#save-and-deploy table thead th.actions {
   width: 60px; 
   text-align: right; }
-#changes table tbody th, tbody td {
+#save-and-deploy table tbody th, tbody td {
   font-size: 0.9em;
   font-family: Arial, Helvetica, sans-serif;
   padding: 2px 7px;
   text-align: left; }
-#changes table tbody tr:hover td, tr:hover td a, tr.odd:hover td, tr.odd:hover td a {
+#save-and-deploy table tbody tr:hover td, 
+#save-and-deploy table tbody tr:hover td a, 
+#save-and-deploy table tbody tr.odd:hover td, 
+#save-and-deploy table tbody tr.odd:hover td a {
   background: #800000;
   color: #ffffff; }
 
