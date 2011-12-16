@@ -1,37 +1,45 @@
-<table id="search-results">
-  <thead>
-    <tr>
-      <th width="150px">file</th>
-      <th>line</th>
-      <th>text</th>
-    </tr>
-  </thead>
-  *{results using each_with_index as r, i}{
-  <tbody>
-    <tr ?{i%2 != 0}{class="odd"} onclick="javascript:load_file('{r[:file]}')">
-      <td width="150px">${r[:file]}</td>
-      <td>${r[:line]}</td>
-      <td>${r[:text][0..100]}</td>
-    </tr>
-  </tbody>
-  }
-</table>
-<div class="row">
-  <div id="ace-editor" class="span16"></div>
+<div id="search-results">
+  <table>
+    <thead>
+      <tr>
+        <th width="150px">file</th>
+        <th>line</th>
+        <th>text</th>
+      </tr>
+    </thead>
+    <tbody>
+    *{results using each_with_index as r, i}{
+      <tr file="{r[:file]}" ?{i%2 != 0}{class="odd"} 
+          onclick="websync.ace.load('{r[:file]}', ${r[:line]})">
+        <td width="150px">${r[:file]}</td>
+        <td>${r[:line]}</td>
+        <td>${r[:text][0..100]}</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+  <div class="row" style="height: 410px;">
+    <div id="ace-editor" class="span16"></div>
+    <script src="js/ace/ace.js"></script>
+    <script src="js/ace/theme-dawn.js"></script>
+    <script>  
+      websync.ace.init("ace-editor", function(ed){
+        var model = ed.model;
+        if (model.state == "dirty") {
+          $("#ace-editor-buttons button").removeClass("disabled");
+        } else {
+          $("#ace-editor-buttons button").addClass("disabled");
+        };
+        $("#search-results tr").removeClass('clean');
+        $("#search-results tr").removeClass('dirty');
+        $("#search-results tr[file='" + model.file + "']").addClass(model.state);
+      });
+      
+    </script>
+  </div>
+  <div id="ace-editor-buttons" class="row">
+    <span class="span12">&nbsp;</span>
+    <button class="btn span2 success disabled">Save</button> 
+    <button class="btn span2 danger  disabled">Cancel</button> 
+  </div>
 </div>
-<script src="js/ace/ace.js"></script>
-<script>
-  var editor = ace.edit("ace-editor");
-  function load_file(file) {
-    $.ajax({
-      type: "GET",
-      url: "get-file-content",
-      data: {file: file},
-      success: function(data) {
-        editor.getSession().setValue(file);
-      },
-      error: websync.error.fatal
-    });
-  };
-</script>
-

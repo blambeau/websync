@@ -30,8 +30,9 @@ module WebSync
     end
 
     ######################################################### Search and replace
+
     get "/search" do
-      results = settings.agent.working_dir.grep(params["expression"], {
+      results = wd.grep(params["expression"], {
         :I => true,
         :ignore_case => true,
       })
@@ -39,6 +40,15 @@ module WebSync
         [404, {"Content-Type" => "text/plain"}, "No result found."]
       else
         serve "views/search-results.wtpl", {:results => results}
+      end
+    end
+
+    get "/search/get-file" do
+      path = params["file"]
+      if (wd/path).exist?
+        send_file (wd/path).to_s
+      else
+        not_found
       end
     end
 
@@ -87,6 +97,10 @@ module WebSync
     end
 
     ############################################################## Helpers
+
+    def wd
+      settings.agent.working_dir
+    end
 
     # Serves a given wlang file
     def serve(file, ctx = {})

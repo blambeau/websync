@@ -62,6 +62,14 @@ form textarea {}
 #main table tbody tr.odd:hover td a {
   background: #800000;
   color: #ffffff; }
+#main table tbody tr.clean td, 
+#main table tbody tr.clean td a {
+  background: green;
+  color: #ffffff; }
+#main table tbody tr.dirty td, 
+#main table tbody tr.dirty td a {
+  background: orange;
+  color: #ffffff; }
 
 #websync-admin-menu {
   position: fixed;
@@ -84,6 +92,10 @@ form textarea {}
 }
 
 
+#search-results .editor-buttons {
+  padding: 10px 0px; }
 #ace-editor {
-  height: 400px; }
+  border: 1px solid black;
+  height: 400px; 
+  font-size: 14px; }
 
