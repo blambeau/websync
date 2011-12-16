@@ -35,6 +35,7 @@ module WebSync
       results = wd.grep(params["expression"], {
         :I => true,
         :ignore_case => true,
+        :word_regexp => true
       })
       if results.empty?
         [404, {"Content-Type" => "text/plain"}, "No result found."]
