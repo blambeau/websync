@@ -20,26 +20,27 @@
   </table>
   <div class="row" style="height: 410px;">
     <div id="ace-editor" class="span16"></div>
-    <script src="js/ace/ace.js"></script>
-    <script src="js/ace/theme-dawn.js"></script>
-    <script>  
-      websync.ace.init("ace-editor", function(ed){
-        var model = ed.model;
-        if (model.state == "dirty") {
-          $("#ace-editor-buttons button").removeClass("disabled");
-        } else {
-          $("#ace-editor-buttons button").addClass("disabled");
-        };
-        $("#search-results tr").removeClass('clean');
-        $("#search-results tr").removeClass('dirty');
-        $("#search-results tr[file='" + model.file + "']").addClass(model.state);
-      });
-      
-    </script>
   </div>
   <div id="ace-editor-buttons" class="row">
     <span class="span12">&nbsp;</span>
     <button class="btn span2 success disabled">Save</button> 
     <button class="btn span2 danger  disabled">Cancel</button> 
   </div>
+  <script src="js/ace/ace.js"></script>
+  <script src="js/ace/theme-dawn.js"></script>
+  <script>  
+    websync.ace.init("ace-editor", function(ed){
+      var model = ed.model;
+      if (model.state == "dirty") {
+        $("#ace-editor-buttons button").removeClass("disabled");
+      } else {
+        $("#ace-editor-buttons button").addClass("disabled");
+      };
+      $("#search-results tr").removeClass('clean');
+      $("#search-results tr").removeClass('dirty');
+      $("#search-results tr[file='" + model.file + "']").addClass(model.state);
+    });
+    $("#ace-editor-buttons .success").click(websync.ace.save);
+    $("#ace-editor-buttons .danger").click(websync.ace.cancel);
+  </script>
 </div>

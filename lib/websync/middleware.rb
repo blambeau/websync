@@ -43,13 +43,21 @@ module WebSync
       end
     end
 
-    get "/search/get-file" do
+    ######################################################### Search and replace
+
+    get "/ace/get-file" do
       path = params["file"]
       if (wd/path).exist?
         send_file (wd/path).to_s
       else
         not_found
       end
+    end
+
+    post "/ace/save" do
+      path = params["file"]
+      (wd/path).write(params["value"])
+      send_file (wd/path).to_s
     end
 
     ############################################################## Post actions
