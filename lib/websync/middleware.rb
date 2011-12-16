@@ -29,6 +29,13 @@ module WebSync
       serve "views/#{params[:name]}.wtpl"
     end
 
+    ######################################################### Search and replace
+    get "/search" do
+      expr = params["expression"]
+      results = settings.agent.working_dir.grep(expr)
+      serve "views/search-results.wtpl", {:results => results}
+    end
+
     ############################################################## Post actions
 
     post '/user-request/import' do
@@ -76,12 +83,12 @@ module WebSync
     ############################################################## Helpers
 
     # Serves a given wlang file
-    def serve(file)
+    def serve(file, ctx = {})
       tpl  = _(file)
-      ctx  = {
+      ctx  = ctx.merge({
         :model => Model.new(settings.agent),
         :environment => settings.environment,
-      }
+      })
       WLang::file_instantiate tpl, ctx
     end
 

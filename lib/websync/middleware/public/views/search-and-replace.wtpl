@@ -1,3 +1,21 @@
 <div id="search-and-replace" class="container">
-  <h2>Search &amp; Replace</h2>
+  <form id="search-and-replace-form">
+    <div class="row">
+      <label class="span4" for="expression">What are you searching for?</label>
+      <input class="span12" type="text" name="expression" value=""/>
+    </div>
+    <script>
+      $("#search-and-replace-form").live("submit", function() {
+        websync.search(
+          $("#search-and-replace-form").serialize(),
+          function(data) { 
+            $("#search-and-replace .search-results").html(data);
+          }
+        );
+        return false;
+      });
+    </script>
+  </form>
+  <div class="search-results">
+  </div>
 </div>

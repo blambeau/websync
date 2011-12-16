@@ -1,0 +1,18 @@
+<table id="search-results">
+  <thead>
+    <tr>
+      <th width="150px">file</th>
+      <th>line</th>
+      <th>text</th>
+    </tr>
+  </thead>
+  *{results using each_with_index as r, i}{
+  <tbody>
+    <tr ?{i%2 != 0}{class="odd"}>
+      <td width="150px">${r[:file]}</td>
+      <td>${r[:line]}</td>
+      <td>${r[:text]}</td>
+    </tr>
+  </tbody>
+  }
+</table>
