@@ -26,6 +26,23 @@ module WebSync
             map{|id| gritrepo.commit(id)}
       end
 
+      ######################################################## Search operations
+    
+      GREP_OPTIONS = {
+        :line_number => true
+      }
+
+      # Looks for content in the working directory
+      def grep(what, options = {})
+        options = GREP_OPTIONS.merge(options)
+        git.grep(git_opts.merge(options), what).
+            split("\n").
+            map{|line|
+          file, line, *others = line.split(':')
+          {:file => file, :line => line, :text => others.join(':')}
+        }
+      end
+
       #################################################### High-level operations
 
       # (see WorkingDir#save)

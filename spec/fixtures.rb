@@ -16,6 +16,7 @@ module WebSync
         repo.clone(tmpdir("bare_clone")) do |cl|
 
           (cl/"README.md").write   "Hey hey hey, this is the project!\n"
+          (cl/"README.md").append  "This is a : line for testing : git grep"
           (cl/"ignored.txt").write "This is an ignored file\n"
           (cl/".gitignore").write  "ignored.txt\ntmp\n"
           cl.save("A first commit").push

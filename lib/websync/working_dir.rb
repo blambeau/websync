@@ -74,7 +74,14 @@ module WebSync
       !(dirty? or backward? or forward?)
     end
 
-    ################################################################## Operation
+    ####################################################### Search operations
+    
+    # Looks for content in the working directory
+    def grep(what, options = {})
+    end
+    undef :grep
+
+    ####################################################### Lifecycle Operations
 
     # Creates a commit by saving local changes.
     #
