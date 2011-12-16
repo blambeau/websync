@@ -8,7 +8,7 @@
   </thead>
   *{results using each_with_index as r, i}{
   <tbody>
-    <tr ?{i%2 != 0}{class="odd"}>
+    <tr ?{i%2 != 0}{class="odd"} onclick="javascript:load_file('{r[:file]}')">
       <td width="150px">${r[:file]}</td>
       <td>${r[:line]}</td>
       <td>${r[:text][0..100]}</td>
@@ -16,3 +16,22 @@
   </tbody>
   }
 </table>
+<div class="row">
+  <div id="ace-editor" class="span16"></div>
+</div>
+<script src="js/ace/ace.js"></script>
+<script>
+  var editor = ace.edit("ace-editor");
+  function load_file(file) {
+    $.ajax({
+      type: "GET",
+      url: "get-file-content",
+      data: {file: file},
+      success: function(data) {
+        editor.getSession().setValue(file);
+      },
+      error: websync.error.fatal
+    });
+  };
+</script>
+

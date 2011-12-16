@@ -1,17 +1,18 @@
-#main {
+#main, #error {
   margin-top: 60px; }
 #main ul {
   padding-left: 10px;
   padding-top: 10px; }
 
+#say, #error {
+  display: none; }
 #say {
   text-align: center;
   position: fixed;
   top: 40px;
   width: 600px;
   left: 50%;
-  margin-left: -300px; 
-  display: none; }
+  margin-left: -300px; }
 
 .section .ajax-loader {
   text-align: right; 
@@ -82,4 +83,7 @@ form textarea {}
   padding: 5px;
 }
 
+
+#ace-editor {
+  height: 400px; }
 
