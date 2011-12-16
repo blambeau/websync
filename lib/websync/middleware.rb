@@ -31,9 +31,15 @@ module WebSync
 
     ######################################################### Search and replace
     get "/search" do
-      expr = params["expression"]
-      results = settings.agent.working_dir.grep(expr)
-      serve "views/search-results.wtpl", {:results => results}
+      results = settings.agent.working_dir.grep(params["expression"], {
+        :I => true,
+        :ignore_case => true,
+      })
+      if results.empty?
+        [404, {"Content-Type" => "text/plain"}, "No result found."]
+      else
+        serve "views/search-results.wtpl", {:results => results}
+      end
     end
 
     ############################################################## Post actions
