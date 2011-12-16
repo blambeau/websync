@@ -1,11 +1,4 @@
 GIT
-  remote: https://github.com/blambeau/epath.git
-  revision: 892eadc7e8dc6026c2b7704851afed0da14abc28
-  branch: tmp
-  specs:
-    epath (0.0.1)
-
-GIT
   remote: https://github.com/blambeau/grit.git
   revision: 099fed8c32ffe910836abbabc9a6997de55e5783
   specs:
@@ -18,6 +11,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.3)
+    epath (0.0.1)
     http (0.0.1)
     mime-types (1.17.2)
     posix-spawn (0.3.6)
@@ -46,7 +40,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  epath!
+  epath (~> 0.0.1)
   grit!
   http (= 0.0.1)
   rack-test (~> 0.6.1)
