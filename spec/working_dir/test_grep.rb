@@ -16,5 +16,10 @@ module WebSync
       ])
     end
 
+    it "should not return raise error if nothing is found" do 
+      wd = Fixtures.a_synchronized_clone
+      wd.grep("nothing such can be found").to_a.should eq([])
+    end
+
   end
 end

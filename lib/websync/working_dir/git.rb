@@ -29,6 +29,7 @@ module WebSync
       ######################################################## Search operations
     
       GREP_OPTIONS = {
+        :raise => false,
         :line_number => true
       }
 
