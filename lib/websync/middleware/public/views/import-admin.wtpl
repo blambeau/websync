@@ -51,7 +51,7 @@
           $("#import-ajax-loader, #import-req-button").toggle();
           websync.ui.say({message: fdbk.message,
                           msgType: fdbk.result});
-          if (fdbk.result != "warning") { websync.ui.refresh("changes"); }
+          if (fdbk.result != "warning") { websync.ui.refresh("save-and-deploy"); }
         });
         return false;
       });
